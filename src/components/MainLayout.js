@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import UserDisplay from "./UserDisplay";
+import UserLogin from "./UserLogin";
 import PostCreate from "./PostCreate";
+
 import { withStyles } from "@material-ui/core/styles";
 import { Link, Switch, withRouter, Route } from "react-router-dom";
 import { Grid, MenuList, MenuItem, ListItemText } from "@material-ui/core";
@@ -37,6 +39,9 @@ class MainLayout extends Component {
               <MenuItem component={Link} to="/user">
                 <ListItemText primary="Hesap" />
               </MenuItem>
+              <MenuItem component={Link} to="/userlogin">
+                <ListItemText primary="Giriş" />
+              </MenuItem>
             </MenuList>
           </Grid>
 
@@ -44,6 +49,7 @@ class MainLayout extends Component {
             <Switch>
               <Route exact path="/postcreate" component={PostCreate} />
               <Route exact path="/user" component={UserDisplay} />
+              <Route exact path="/userlogin" component={UserLogin} />
             </Switch>
           </Grid>
         </Grid>

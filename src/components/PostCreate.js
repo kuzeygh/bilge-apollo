@@ -52,7 +52,6 @@ class MainRouter extends Component {
             </Typography>
             <TextField
               placeholder="Başlık"
-              className={classes.textfields}
               label="Başlık"
               margin="normal"
               id="title"
@@ -63,7 +62,6 @@ class MainRouter extends Component {
 
             <TextField
               placeholder="İçerik"
-              className={classes.textfields}
               label="İçerik"
               margin="normal"
               id="title"

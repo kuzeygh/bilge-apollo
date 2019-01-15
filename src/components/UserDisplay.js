@@ -49,7 +49,7 @@ class UserDisplay extends Component {
   render() {
     const { classes } = this.props;
     const userId = this.props.match.params.id;
-    console.log(userId);
+
     return (
       <div className={classes.root}>
         <Query query={TAKE_USER} variables={{ userId }}>

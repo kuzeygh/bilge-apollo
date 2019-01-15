@@ -10,6 +10,9 @@ const CREATE_POST = gql`
       id
       title
       content
+      author {
+        id
+      }
     }
   }
 `;
@@ -76,9 +79,10 @@ class MainRouter extends Component {
             <Mutation
               mutation={CREATE_POST}
               variables={{ title, content }}
-              onCompleted={() => {
+              onCompleted={data => {
                 this.setState({ created: true });
-                this.props.history.push("/user");
+                const userId = data.createPost.author.id;
+                this.props.history.push(`/user/${userId}`);
               }}
             >
               {createPostMutation =>

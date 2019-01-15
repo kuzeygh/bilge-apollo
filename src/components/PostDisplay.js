@@ -47,7 +47,9 @@ class PostDisplay extends Component {
               <Typography variant="h4">{post.title}</Typography>
               <Typography variant="body1">{post.content}</Typography>
               <div className={classes.authorContainer}>
-                <Typography variant="h5">{post.author.email}</Typography>
+                <Typography variant="h5" color="secondary">
+                  {post.author.email}
+                </Typography>
               </div>
             </Paper>
           );

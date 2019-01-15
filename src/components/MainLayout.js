@@ -3,10 +3,12 @@ import UserDisplay from "./UserDisplay";
 import UserLogin from "./UserLogin";
 import PostCreate from "./PostCreate";
 import PostDisplay from "./PostDisplay";
+import { AUTH_TOKEN, APP_SECRET } from "../constants";
 
 import { withStyles } from "@material-ui/core/styles";
 import { Link, Switch, withRouter, Route } from "react-router-dom";
 import { Grid, MenuList, MenuItem, ListItemText } from "@material-ui/core";
+import jwt from "jsonwebtoken";
 
 /////Styles Başlangıcı////
 
@@ -29,20 +31,40 @@ const styles = theme => ({
 class MainLayout extends Component {
   render() {
     const { classes } = this.props;
+    const authToken = localStorage.getItem(AUTH_TOKEN);
+
+    const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
     return (
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={2}>
             <MenuList className={classes.menuList}>
-              <MenuItem component={Link} to="/postcreate">
-                <ListItemText primary="Makale Yaz" />
-              </MenuItem>
-              <MenuItem component={Link} to={`/user/:id`}>
-                <ListItemText primary="Hesap" />
-              </MenuItem>
-              <MenuItem component={Link} to="/userlogin">
-                <ListItemText primary="Giriş" />
-              </MenuItem>
+              {authToken && (
+                <MenuItem component={Link} to="/postcreate">
+                  <ListItemText primary="Makale Yaz" />
+                </MenuItem>
+              )}
+              {authToken && (
+                <MenuItem component={Link} to={`/user/${userId}`}>
+                  <ListItemText primary="Hesap" />
+                </MenuItem>
+              )}
+              {!authToken && (
+                <MenuItem component={Link} to="/userlogin">
+                  <ListItemText primary="Giriş" />
+                </MenuItem>
+              )}
+
+              {authToken && (
+                <MenuItem
+                  onClick={() => {
+                    localStorage.removeItem(AUTH_TOKEN);
+                    this.props.history.push("/");
+                  }}
+                >
+                  <ListItemText primary="Çıkış" />
+                </MenuItem>
+              )}
             </MenuList>
           </Grid>
 

@@ -16,7 +16,7 @@ const CREATE_POST = gql`
 
 const styles = theme => ({
   rootContainer: {
-    width: "800px",
+    maxWidth: "800px",
     margin: "40px auto"
   },
   root: {

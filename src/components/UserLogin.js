@@ -45,12 +45,8 @@ const styles = theme => ({
 });
 
 const SIGNUP_MUTATION = gql`
-  mutation SignUpMutation(
-    $name: String!
-    $email: String!
-    $password1: String!
-  ) {
-    createUser(name: $name, email: $email, password: $password1) {
+  mutation SignUpMutation($name: String!, $email: String!, $password: String!) {
+    createUser(name: $name, email: $email, password: $password) {
       token
       user {
         id
@@ -97,7 +93,7 @@ class UserLogin extends Component {
     const userId = this.state.login
       ? data.loginUser.user.id
       : data.createUser.user.id;
-    console.log(userId);
+
     this._saveUserData(token);
     this.props.history.push(`/user/${userId}`);
   };

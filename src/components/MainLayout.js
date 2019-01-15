@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserDisplay from "./UserDisplay";
 import UserLogin from "./UserLogin";
 import PostCreate from "./PostCreate";
+import PostDisplay from "./PostDisplay";
 
 import { withStyles } from "@material-ui/core/styles";
 import { Link, Switch, withRouter, Route } from "react-router-dom";
@@ -50,6 +51,7 @@ class MainLayout extends Component {
               <Route exact path="/postcreate" component={PostCreate} />
               <Route path={`/user/:id`} component={UserDisplay} />
               <Route exact path="/userlogin" component={UserLogin} />
+              <Route path={`/post/:id`} component={PostDisplay} />
             </Switch>
           </Grid>
         </Grid>

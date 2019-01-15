@@ -36,7 +36,7 @@ class MainLayout extends Component {
               <MenuItem component={Link} to="/postcreate">
                 <ListItemText primary="Makale Yaz" />
               </MenuItem>
-              <MenuItem component={Link} to="/user">
+              <MenuItem component={Link} to={`/user/:id`}>
                 <ListItemText primary="Hesap" />
               </MenuItem>
               <MenuItem component={Link} to="/userlogin">
@@ -48,7 +48,7 @@ class MainLayout extends Component {
           <Grid item xs={10} className={classes.gridLeft}>
             <Switch>
               <Route exact path="/postcreate" component={PostCreate} />
-              <Route exact path="/user" component={UserDisplay} />
+              <Route path={`/user/:id`} component={UserDisplay} />
               <Route exact path="/userlogin" component={UserLogin} />
             </Switch>
           </Grid>

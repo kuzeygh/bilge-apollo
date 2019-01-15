@@ -15,6 +15,9 @@ import {
   VisibilityOffOutlined
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
+import { AUTH_TOKEN } from "../constants";
 
 const styles = theme => ({
   rootContainer: {
@@ -41,6 +44,32 @@ const styles = theme => ({
   }
 });
 
+const SIGNUP_MUTATION = gql`
+  mutation SignUpMutation(
+    $name: String!
+    $email: String!
+    $password1: String!
+  ) {
+    createUser(name: $name, email: $email, password: $password1) {
+      token
+      user {
+        id
+      }
+    }
+  }
+`;
+
+const LOGIN_MUTATION = gql`
+  mutation LoginMutation($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      token
+      user {
+        id
+      }
+    }
+  }
+`;
+
 class UserLogin extends Component {
   state = {
     name: "",
@@ -63,6 +92,20 @@ class UserLogin extends Component {
     this.setState(state => ({ login: !state.login }));
   };
 
+  _confirm = async data => {
+    const { token } = this.state.login ? data.loginUser : data.createUser;
+    const userId = this.state.login
+      ? data.loginUser.user.id
+      : data.createUser.user.id;
+    console.log(userId);
+    this._saveUserData(token);
+    this.props.history.push(`/user/${userId}`);
+  };
+
+  _saveUserData = token => {
+    localStorage.setItem(AUTH_TOKEN, token);
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -73,6 +116,7 @@ class UserLogin extends Component {
       showPassword,
       login
     } = this.state;
+    const password = password1;
     return (
       <div className={classes.rootContainer}>
         <Paper className={classes.root} spacing={1}>
@@ -182,13 +226,22 @@ class UserLogin extends Component {
           </div>
 
           <div className={classes.buttonContainer}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.buttons}
+            <Mutation
+              mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
+              variables={{ email, name, password }}
+              onCompleted={data => this._confirm(data)}
             >
-              {login ? "Giriş" : "Üye Ol"}
-            </Button>
+              {signupOrLogin => (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.buttons}
+                  onClick={signupOrLogin}
+                >
+                  {login ? "Giriş" : "Üye Ol"}
+                </Button>
+              )}
+            </Mutation>
 
             <Button
               variant="outlined"

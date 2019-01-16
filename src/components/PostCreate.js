@@ -3,7 +3,8 @@ import { Paper, TextField, Typography, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import TextEditor from "./TextEditor";
+import TextEditor, { initialValue } from "./TextEditor";
+import { Value } from "slate";
 
 const CREATE_POST = gql`
   mutation CreatePost($title: String!, $content: String!) {
@@ -47,12 +48,17 @@ class MainRouter extends Component {
   state = {
     title: "",
     content: "",
+    value: initialValue,
     created: false
+  };
+
+  handleTextEditor = ({ value }) => {
+    this.setState({ value });
   };
 
   render() {
     const { classes } = this.props;
-    const { title, content, created } = this.state;
+    const { title, content, created, value } = this.state;
 
     return (
       <div className={classes.rootContainer}>
@@ -74,7 +80,7 @@ class MainRouter extends Component {
             </div>
 
             <div className={classes.contentContainer}>
-              <TextEditor />
+              <TextEditor onChange={this.handleTextEditor} value={value} />
             </div>
           </div>
           <div className={classes.buttonContainer}>

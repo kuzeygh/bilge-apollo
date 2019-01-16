@@ -3,29 +3,27 @@ import { Editor } from "slate-react";
 import { Value } from "slate";
 import { Paper } from "@material-ui/core";
 
-const existingValue = JSON.parse(localStorage.getItem("content"));
-const initialValue = Value.fromJSON(
-  existingValue || {
-    document: {
-      nodes: [
-        {
-          object: "block",
-          type: "paragraph",
-          nodes: [
-            {
-              object: "text",
-              leaves: [
-                {
-                  text: "A line of text in a paragraph."
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+// const existingValue = JSON.parse(localStorage.getItem("content"));
+export const initialValue = Value.fromJSON({
+  document: {
+    nodes: [
+      {
+        object: "block",
+        type: "paragraph",
+        nodes: [
+          {
+            object: "text",
+            leaves: [
+              {
+                text: "A line of text in a paragraph."
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
-);
+});
 
 function MarkHotKey(options) {
   const { type, key } = options;
@@ -48,33 +46,15 @@ const plugins = [
 ];
 
 class TextEditor extends Component {
-  state = {
-    value: initialValue
-  };
-
-  onChange = ({ value }) => {
-    // Save the value to Local Storage
-
-    if (value.document != this.state.value.document) {
-      const content = JSON.stringify(value.toJSON());
-      localStorage.setItem("content", content);
-    }
-
-    this.setState({ value });
-  };
-
   render() {
     return (
       <Paper>
         <Editor
           plugins={plugins}
-          value={this.state.value}
-          onChange={this.onChange}
-          // Add the `renderMark` prop...
+          value={this.props.value}
+          onChange={this.props.onChange}
           renderMark={this.renderMark}
         />
-
-        <button>Gönder</button>
       </Paper>
     );
   }

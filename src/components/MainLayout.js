@@ -5,6 +5,7 @@ import PostCreate from "./PostCreate";
 import PostCreateWithImage from "./PostCreateWithImage";
 import PostDisplay from "./PostDisplay";
 import TextEditor from "./TextEditor";
+import TextEditorDisplay from "./TextEditorDisplay";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -73,6 +74,9 @@ class MainLayout extends Component {
               <MenuItem component={Link} to="/texteditor">
                 <ListItemText primary="Text Editor" />
               </MenuItem>
+              <MenuItem component={Link} to="/texteditordisplay">
+                <ListItemText primary="Text Editor Display" />
+              </MenuItem>
             </MenuList>
           </Grid>
 
@@ -84,6 +88,11 @@ class MainLayout extends Component {
               <Route path={`/post/:id`} component={PostDisplay} />
               <Route exact path="/yazboz" component={PostCreateWithImage} />
               <Route exact path="/texteditor" component={TextEditor} />
+              <Route
+                exact
+                path="/texteditordisplay"
+                component={TextEditorDisplay}
+              />
             </Switch>
           </Grid>
         </Grid>

@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import UserDisplay from "./UserDisplay";
 import UserLogin from "./UserLogin";
 import PostCreate from "./PostCreate";
+import PostCreateWithImage from "./PostCreateWithImage";
 import PostDisplay from "./PostDisplay";
+import TextEditor from "./TextEditor";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -65,6 +67,12 @@ class MainLayout extends Component {
                   <ListItemText primary="Çıkış" />
                 </MenuItem>
               )}
+              <MenuItem component={Link} to="/yazboz">
+                <ListItemText primary="Yaz Boz" />
+              </MenuItem>
+              <MenuItem component={Link} to="/texteditor">
+                <ListItemText primary="Text Editor" />
+              </MenuItem>
             </MenuList>
           </Grid>
 
@@ -74,6 +82,8 @@ class MainLayout extends Component {
               <Route path={`/user/:id`} component={UserDisplay} />
               <Route exact path="/userlogin" component={UserLogin} />
               <Route path={`/post/:id`} component={PostDisplay} />
+              <Route exact path="/yazboz" component={PostCreateWithImage} />
+              <Route exact path="/texteditor" component={TextEditor} />
             </Switch>
           </Grid>
         </Grid>

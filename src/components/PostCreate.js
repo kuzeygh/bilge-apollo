@@ -3,6 +3,7 @@ import { Paper, TextField, Typography, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import TextEditor from "./TextEditor";
 
 const CREATE_POST = gql`
   mutation CreatePost($title: String!, $content: String!) {
@@ -25,6 +26,13 @@ const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
     padding: theme.spacing.unit * 2
+  },
+  titleContainer: {
+    margin: "20px"
+  },
+  contentContainer: {
+    padding: "20px",
+    borderTop: "1px solid #ccc"
   },
   buttons: {
     margin: theme.spacing.unit
@@ -53,27 +61,21 @@ class MainRouter extends Component {
             <Typography variant="h5" color="primary">
               Başlık ve içeriklerini doldurun
             </Typography>
-            <TextField
-              placeholder="Başlık"
-              label="Başlık"
-              margin="normal"
-              id="title"
-              fullWidth
-              value={title}
-              onChange={event => this.setState({ title: event.target.value })}
-            />
+            <div className={classes.titleContainer}>
+              <TextField
+                placeholder="Başlık"
+                label="Başlık"
+                margin="normal"
+                id="title"
+                fullWidth
+                value={title}
+                onChange={event => this.setState({ title: event.target.value })}
+              />
+            </div>
 
-            <TextField
-              placeholder="İçerik"
-              label="İçerik"
-              margin="normal"
-              id="title"
-              value={content}
-              onChange={event => this.setState({ content: event.target.value })}
-              fullWidth
-              multiline
-              rows={10}
-            />
+            <div className={classes.contentContainer}>
+              <TextEditor />
+            </div>
           </div>
           <div className={classes.buttonContainer}>
             <Mutation

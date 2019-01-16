@@ -4,7 +4,6 @@ import { Query } from "react-apollo";
 import { Editor } from "slate-react";
 import { Value } from "slate";
 import { Paper } from "@material-ui/core";
-import { initialValue } from "./TextEditor";
 
 const TAKE_POST = gql`
   query TakePost($postId: ID!) {

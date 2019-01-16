@@ -3,8 +3,8 @@ import { Paper, TextField, Typography, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import TextEditor, { initialValue } from "./TextEditor";
-import { Value } from "slate";
+import TextEditor from "./TextEditor";
+import { initialValue } from "../constants";
 
 const CREATE_POST = gql`
   mutation CreatePost($title: String!, $content: String!) {

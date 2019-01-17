@@ -3,6 +3,8 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { Typography, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import TextEditorDisplay from "./TextEditorDisplay";
+import { Value } from "slate";
 
 const TAKE_POST = gql`
   query TakePost($postId: ID!) {
@@ -42,10 +44,13 @@ class PostDisplay extends Component {
           if (error) return <div>Error...</div>;
 
           const post = data.postById;
+          let content = post.content;
+          content = JSON.parse(content);
+          content = Value.fromJSON(content);
           return (
             <Paper className={classes.root}>
               <Typography variant="h4">{post.title}</Typography>
-              <Typography variant="body1">{post.content}</Typography>
+              <TextEditorDisplay value={content} />
               <div className={classes.authorContainer}>
                 <Typography variant="h5" color="secondary">
                   {post.author.email}

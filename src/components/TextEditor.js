@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Editor } from "slate-react";
-import { Paper } from "@material-ui/core";
 
 // const existingValue = JSON.parse(localStorage.getItem("content"));
 
@@ -27,14 +26,14 @@ const plugins = [
 class TextEditor extends Component {
   render() {
     return (
-      <Paper>
+      <div>
         <Editor
           plugins={plugins}
           value={this.props.value}
           onChange={this.props.onChange}
           renderMark={this.renderMark}
         />
-      </Paper>
+      </div>
     );
   }
 

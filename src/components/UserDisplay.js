@@ -2,14 +2,8 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import {
-  Typography,
-  Paper,
-  List,
-  ListItem,
-  ListItemText
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Typography, Paper, List } from "@material-ui/core";
+import PostListItem from "./PostListItem";
 
 const styles = theme => ({
   root: {
@@ -31,7 +25,7 @@ const styles = theme => ({
   }
 });
 
-const TAKE_USER = gql`
+export const TAKE_USER = gql`
   query TakeUser($userId: ID!) {
     userById(userId: $userId) {
       id
@@ -40,6 +34,7 @@ const TAKE_USER = gql`
       posts {
         id
         title
+        content
       }
     }
   }
@@ -76,9 +71,7 @@ class UserDisplay extends Component {
                   </Typography>
                   <List component="nav">
                     {posts.map(post => (
-                      <ListItem button component={Link} to={`/post/${post.id}`}>
-                        <ListItemText primary={post.title} />
-                      </ListItem>
+                      <PostListItem post={post} key={post.id} />
                     ))}
                   </List>
                 </div>

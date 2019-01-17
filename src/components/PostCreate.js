@@ -5,16 +5,16 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import TextEditor from "./TextEditor";
 import { initialValue } from "../constants";
+import { TAKE_USER } from "./UserDisplay";
+import { AUTH_TOKEN, APP_SECRET } from "../constants";
+import jwt from "jsonwebtoken";
 
 const CREATE_POST = gql`
-  mutation CreatePost($title: String!, $content: String!) {
-    createPost(title: $title, content: $content) {
+  mutation CreatePost($title: String!, $contentJson: String!) {
+    createPost(title: $title, content: $contentJson) {
       id
       title
       content
-      author {
-        id
-      }
     }
   }
 `;
@@ -47,18 +47,22 @@ const styles = theme => ({
 class MainRouter extends Component {
   state = {
     title: "",
-    content: "",
-    value: initialValue,
+    content: initialValue,
     created: false
   };
 
   handleTextEditor = ({ value }) => {
-    this.setState({ value });
+    this.setState({ content: value });
   };
 
   render() {
     const { classes } = this.props;
-    const { title, content, created, value } = this.state;
+    const { title, created } = this.state;
+    let { content } = this.state;
+    let contentJson = JSON.stringify(content);
+
+    const authToken = localStorage.getItem(AUTH_TOKEN);
+    const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
 
     return (
       <div className={classes.rootContainer}>
@@ -80,16 +84,27 @@ class MainRouter extends Component {
             </div>
 
             <div className={classes.contentContainer}>
-              <TextEditor onChange={this.handleTextEditor} value={value} />
+              <TextEditor onChange={this.handleTextEditor} value={content} />
             </div>
           </div>
           <div className={classes.buttonContainer}>
             <Mutation
               mutation={CREATE_POST}
-              variables={{ title, content }}
-              onCompleted={data => {
+              variables={{ title, contentJson }}
+              update={(cache, { data: { createPost } }) => {
+                const data = cache.readQuery({
+                  query: TAKE_USER,
+                  variables: { userId }
+                });
+                data.userById.posts.unshift(createPost);
+
+                cache.writeQuery({
+                  query: TAKE_USER,
+                  data
+                });
+              }}
+              onCompleted={() => {
                 this.setState({ created: true });
-                const userId = data.createPost.author.id;
                 this.props.history.push(`/user/${userId}`);
               }}
             >

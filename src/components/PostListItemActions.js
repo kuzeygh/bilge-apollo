@@ -12,12 +12,24 @@ import { CreateTwoTone } from "@material-ui/icons";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { TAKE_USER } from "./UserDisplay";
+import { publishedPostData } from "../util.js";
+import { Link } from "react-router-dom";
 
 const DELETE_POST = gql`
   mutation DeletePost($postId: ID!) {
     deletePost(postId: $postId) {
       id
       title
+    }
+  }
+`;
+
+const PUBLISH_POST = gql`
+  mutation PublishPost($postId: ID!) {
+    publishPost(postId: $postId) {
+      id
+      title
+      published
     }
   }
 `;
@@ -74,7 +86,30 @@ class PostListItemActions extends Component {
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList>
-                    <MenuItem onClick={this.handleClose}>Düzenle</MenuItem>
+                    <Mutation
+                      mutation={PUBLISH_POST}
+                      variables={{ postId }}
+                      update={cache => {
+                        const data = cache.readQuery({
+                          query: TAKE_USER,
+                          variables: { userId }
+                        });
+
+                        const publishedPosts = publishedPostData(data, postId);
+
+                        cache.writeQuery({
+                          query: TAKE_USER,
+                          publishedPosts
+                        });
+                      }}
+                    >
+                      {publishMutation => (
+                        <MenuItem onClick={publishMutation}>Yayımla</MenuItem>
+                      )}
+                    </Mutation>
+                    <MenuItem component={Link} to={`/post/edit/${postId}`}>
+                      Düzenle
+                    </MenuItem>
                     <Mutation
                       mutation={DELETE_POST}
                       variables={{ postId }}

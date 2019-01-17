@@ -30,8 +30,9 @@ class TextEditor extends Component {
         <Editor
           plugins={plugins}
           value={this.props.value}
-          onChange={this.props.onChange}
+          onChange={this.props.readOnly ? null : this.props.onChange}
           renderMark={this.renderMark}
+          readOnly={this.props.readOnly}
           placeholder={this.props.placeholder}
         />
       </div>

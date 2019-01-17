@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Typography, Paper, List } from "@material-ui/core";
+import { Typography, Paper, List, AppBar, Tabs, Tab } from "@material-ui/core";
 import PostListItem from "./PostListItem";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 import jwt from "jsonwebtoken";
+import SwipeableViews from "react-swipeable-views";
 
 const styles = theme => ({
   root: {
@@ -24,6 +25,11 @@ const styles = theme => ({
   },
   listContainer: {
     padding: "1rem"
+  },
+  tabContainer: {
+    backgroundColor: theme.palette.background.paper,
+    width: "100%",
+    margin: "10px"
   }
 });
 
@@ -37,14 +43,28 @@ export const TAKE_USER = gql`
         id
         title
         content
+        published
       }
     }
   }
 `;
 
 class UserDisplay extends Component {
+  state = {
+    value: 0
+  };
+
+  handleTabChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  handleChangeIndex = index => {
+    this.setState({ value: index });
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, theme } = this.props;
+    const { value } = this.state;
     const authToken = localStorage.getItem(AUTH_TOKEN);
     const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
 
@@ -57,6 +77,12 @@ class UserDisplay extends Component {
 
             const user = data.userById;
             const posts = data.userById.posts;
+            const publishedPosts = posts.filter(
+              post => post.published === true
+            );
+            const notPublishedPosts = posts.filter(
+              post => post.published === false
+            );
             return (
               <Paper className={classes.root}>
                 <div className={classes.headerContainer}>
@@ -72,11 +98,48 @@ class UserDisplay extends Component {
                   <Typography variant="h4" color="primary">
                     Makaleler
                   </Typography>
-                  <List component="nav">
-                    {posts.map(post => (
-                      <PostListItem post={post} key={post.id} user={user} />
-                    ))}
-                  </List>
+                  <div className={classes.tabContainer}>
+                    <AppBar position="static" color="default">
+                      <Tabs
+                        value={value}
+                        onChange={this.handleTabChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        variant="fullWidth"
+                      >
+                        <Tab label="Taslaklar" />
+                        <Tab label="Yayınlar" />
+                      </Tabs>
+                    </AppBar>
+                    <SwipeableViews
+                      axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                      index={value}
+                      onChangeIndex={this.handleChangeIndex}
+                    >
+                      <TabContainer dir={theme.direction}>
+                        <List component="nav">
+                          {notPublishedPosts.map(post => (
+                            <PostListItem
+                              post={post}
+                              key={post.id}
+                              user={user}
+                            />
+                          ))}
+                        </List>
+                      </TabContainer>
+                      <TabContainer dir={theme.direction}>
+                        <List component="nav">
+                          {publishedPosts.map(post => (
+                            <PostListItem
+                              post={post}
+                              key={post.id}
+                              user={user}
+                            />
+                          ))}
+                        </List>
+                      </TabContainer>
+                    </SwipeableViews>
+                  </div>
                 </div>
               </Paper>
             );
@@ -87,4 +150,12 @@ class UserDisplay extends Component {
   }
 }
 
-export default withStyles(styles)(UserDisplay);
+function TabContainer({ children, dir }) {
+  return (
+    <Typography componet="div" dir={dir} style={{ padding: 8 * 3 }}>
+      {children}
+    </Typography>
+  );
+}
+
+export default withStyles(styles, { withTheme: true })(UserDisplay);

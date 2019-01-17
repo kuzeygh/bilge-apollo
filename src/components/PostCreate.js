@@ -15,6 +15,7 @@ const CREATE_POST = gql`
       id
       title
       content
+      published
     }
   }
 `;
@@ -44,7 +45,7 @@ const styles = theme => ({
   }
 });
 
-class MainRouter extends Component {
+class PostCreate extends Component {
   state = {
     title: "",
     content: initialValue,
@@ -88,6 +89,7 @@ class MainRouter extends Component {
                 onChange={this.handleTextEditor}
                 value={content}
                 placeholder="İçerik"
+                readOnly={false}
               />
             </div>
           </div>
@@ -160,4 +162,4 @@ class MainRouter extends Component {
   }
 }
 
-export default withStyles(styles)(MainRouter);
+export default withStyles(styles)(PostCreate);

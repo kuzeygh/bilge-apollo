@@ -4,6 +4,7 @@ import UserLogin from "./UserLogin";
 import PostCreate from "./PostCreate";
 import PostCreateWithImage from "./PostCreateWithImage";
 import PostDisplay from "./PostDisplay";
+import PostEdit from "./PostEdit";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -77,7 +78,8 @@ class MainLayout extends Component {
               <Route exact path="/postcreate" component={PostCreate} />
               <Route path={`/user/:id`} component={UserDisplay} />
               <Route exact path="/userlogin" component={UserLogin} />
-              <Route path={`/post/:id`} component={PostDisplay} />
+              <Route exact path={`/post/:id`} component={PostDisplay} />
+              <Route path={`/post/edit/:id`} component={PostEdit} />
               <Route exact path="/yazboz" component={PostCreateWithImage} />
             </Switch>
           </Grid>

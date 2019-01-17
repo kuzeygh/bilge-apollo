@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { Typography, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import TextEditorDisplay from "./TextEditorDisplay";
+import TextEditor from "./TextEditor";
 import { Value } from "slate";
 
 const TAKE_POST = gql`
@@ -12,6 +13,7 @@ const TAKE_POST = gql`
       id
       title
       content
+      published
       author {
         id
         name
@@ -44,13 +46,14 @@ class PostDisplay extends Component {
           if (error) return <div>Error...</div>;
 
           const post = data.postById;
+          const published = post.published;
           let content = post.content;
           content = JSON.parse(content);
           content = Value.fromJSON(content);
           return (
             <Paper className={classes.root}>
               <Typography variant="h4">{post.title}</Typography>
-              <TextEditorDisplay value={content} />
+              <TextEditor value={content} readOnly={true} />
               <div className={classes.authorContainer}>
                 <Typography variant="body1" color="secondary">
                   {post.author.email}

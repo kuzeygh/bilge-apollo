@@ -25,7 +25,7 @@ class TextEditorDisplay extends Component {
         <Editor
           value={this.props.value}
           renderMark={this.renderMark}
-          readOnly
+          readOnly={this.props.published ? true : false}
         />
       </div>
     );

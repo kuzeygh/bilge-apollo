@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  ListItem,
-  ListItemText,
-  IconButton,
-  ListItemSecondaryAction
-} from "@material-ui/core";
-import { Delete } from "@material-ui/icons";
+import { ListItem, ListItemText } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import PostListItemActions from "./PostListItemActions";
 
 const styles = theme => ({
   root: {
@@ -17,7 +12,8 @@ const styles = theme => ({
     width: "75%"
   },
   buttonContainer: {
-    width: "25%"
+    width: "25%",
+    display: "flex"
   }
 });
 
@@ -29,13 +25,7 @@ const PostListItem = props => (
       </ListItem>
     </div>
     <div className={props.classes.buttonContainer}>
-      <ListItem alignItems="center">
-        <ListItemSecondaryAction>
-          <IconButton>
-            <Delete />
-          </IconButton>
-        </ListItemSecondaryAction>
-      </ListItem>
+      <PostListItemActions postId={props.post.id} user={props.user} />
     </div>
   </div>
 );

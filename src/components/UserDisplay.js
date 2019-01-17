@@ -4,6 +4,8 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { Typography, Paper, List } from "@material-ui/core";
 import PostListItem from "./PostListItem";
+import { AUTH_TOKEN, APP_SECRET } from "../constants";
+import jwt from "jsonwebtoken";
 
 const styles = theme => ({
   root: {
@@ -43,7 +45,8 @@ export const TAKE_USER = gql`
 class UserDisplay extends Component {
   render() {
     const { classes } = this.props;
-    const userId = this.props.match.params.id;
+    const authToken = localStorage.getItem(AUTH_TOKEN);
+    const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
 
     return (
       <div className={classes.root}>
@@ -71,7 +74,7 @@ class UserDisplay extends Component {
                   </Typography>
                   <List component="nav">
                     {posts.map(post => (
-                      <PostListItem post={post} key={post.id} />
+                      <PostListItem post={post} key={post.id} user={user} />
                     ))}
                   </List>
                 </div>

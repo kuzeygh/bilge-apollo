@@ -29,7 +29,7 @@ const PostListItem = props => (
       </ListItem>
     </div>
     <div className={props.classes.buttonContainer}>
-      <ListItem>
+      <ListItem alignItems="center">
         <ListItemSecondaryAction>
           <IconButton>
             <Delete />

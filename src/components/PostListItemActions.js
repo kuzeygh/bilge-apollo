@@ -78,7 +78,7 @@ class PostListItemActions extends Component {
                     <Mutation
                       mutation={DELETE_POST}
                       variables={{ postId }}
-                      update={(cache, { data: {} }) => {
+                      update={cache => {
                         const data = cache.readQuery({
                           query: TAKE_USER,
                           variables: { userId }

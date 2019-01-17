@@ -13,7 +13,8 @@ const styles = theme => ({
   },
   buttonContainer: {
     width: "25%",
-    display: "flex"
+    display: "flex",
+    justifyContent: "flex-end"
   }
 });
 

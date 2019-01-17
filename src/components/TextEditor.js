@@ -32,6 +32,7 @@ class TextEditor extends Component {
           value={this.props.value}
           onChange={this.props.onChange}
           renderMark={this.renderMark}
+          placeholder={this.props.placeholder}
         />
       </div>
     );

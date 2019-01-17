@@ -52,7 +52,7 @@ class PostDisplay extends Component {
               <Typography variant="h4">{post.title}</Typography>
               <TextEditorDisplay value={content} />
               <div className={classes.authorContainer}>
-                <Typography variant="h5" color="secondary">
+                <Typography variant="body1" color="secondary">
                   {post.author.email}
                 </Typography>
               </div>

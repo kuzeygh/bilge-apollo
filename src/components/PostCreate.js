@@ -84,7 +84,11 @@ class MainRouter extends Component {
             </div>
 
             <div className={classes.contentContainer}>
-              <TextEditor onChange={this.handleTextEditor} value={content} />
+              <TextEditor
+                onChange={this.handleTextEditor}
+                value={content}
+                placeholder="İçerik"
+              />
             </div>
           </div>
           <div className={classes.buttonContainer}>

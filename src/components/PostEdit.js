@@ -109,6 +109,7 @@ class PostEdit extends Component {
             fullWidth
             value={this.state.title}
             onChange={event => this.setState({ title: event.target.value })}
+            autoFocus
           />
         </div>
 

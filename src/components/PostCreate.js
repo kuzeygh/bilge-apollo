@@ -33,6 +33,7 @@ const styles = theme => ({
     margin: "20px"
   },
   contentContainer: {
+    margin: "10px",
     padding: "20px",
     borderTop: "1px solid #ccc"
   },
@@ -81,6 +82,7 @@ class PostCreate extends Component {
                 fullWidth
                 value={title}
                 onChange={event => this.setState({ title: event.target.value })}
+                autoFocus
               />
             </div>
 

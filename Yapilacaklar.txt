@@ -1,10 +1,7 @@
 Yapılacaklar:
 
-
-2) Düzenleme butonuna bastıktan sonra text editore focus işlemi yapılacak.
-3) Text editore butonlar koy
-4) Editor içinde image eklemeye yap.
-5) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
+2) Editor içinde image eklemeye yap.
+3) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
 
 
 Yapılanlar:
@@ -13,3 +10,7 @@ S.2) User-Display ekranından aşağıdaki post list item ile ilgili olan kısı
   C.2) Sorun Typograhpy de kullanılan component propunu componen olarak verdiğim için meydana geldi.
 S.3) Bir kere düzenleye bastıkdan sonra ardında ikinci gidişte query sıkıntısı var.
   C.3) Sorun Query componentina fetchPolicy="network-only" verilerek çözüldü.
+S.4) Düzenleme butonuna bastıktan sonra text editore focus işlemi yapılacak.
+  C.4) TextField component' ına autoFocus propu verilerek sorun çözüldü.
+S.5) 1) Text editore butonlar koy
+  C.5) event geçilerek yapıldı.

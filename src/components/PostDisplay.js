@@ -52,7 +52,7 @@ class PostDisplay extends Component {
           return (
             <Paper className={classes.root}>
               <Typography variant="h4">{post.title}</Typography>
-              <TextEditor value={content} readOnly={true} />
+              <TextEditor value={content} readOnly={true} display />
               <div className={classes.authorContainer}>
                 <Typography variant="body1" color="secondary">
                   {post.author.email}

@@ -5,6 +5,8 @@ import { Button, Toolbar, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import isUrl from "is-url";
 import ImageExtensions from "image-extensions";
+import { withApollo } from "react-apollo";
+import gql from "graphql-tag";
 
 // const existingValue = JSON.parse(localStorage.getItem("content"));
 
@@ -15,6 +17,14 @@ import ImageExtensions from "image-extensions";
 //   MarkHotKey({ key: "~", type: "strikethrough" }),
 //   MarkHotKey({ key: "u", type: "underline" })
 // ];
+
+const CREATE_POST_IMAGE = gql`
+  mutation CreatePostImage($picture: Upload!) {
+    createPostImage(picture: $picture) {
+      pictureURL
+    }
+  }
+`;
 
 function wrapLink(editor, href) {
   editor.wrapInline({
@@ -32,6 +42,7 @@ const schema = {
   document: {
     last: { type: "paragraph" },
     normalize: (editor, { code, node, child }) => {
+      // eslint-disable-next-line
       switch (code) {
         case "last_child_type_invalid": {
           const paragraph = Block.create("paragraph");
@@ -79,6 +90,10 @@ const styles = theme => ({
 });
 
 class TextEditor extends Component {
+  state = {
+    client: this.props.client
+  };
+
   MarkHotKey(event, options) {
     event.preventDefault();
     const { type } = options;
@@ -187,7 +202,7 @@ class TextEditor extends Component {
     }
   };
 
-  onDropOrPaste = (event, editor, next) => {
+  onDropOrPaste = async (event, editor, next) => {
     const target = getEventRange(event, editor);
     if (!target && event.type === "drop") return next();
 
@@ -196,15 +211,27 @@ class TextEditor extends Component {
 
     if (type === "files") {
       for (const file of files) {
-        const reader = new FileReader();
         const [mime] = file.type.split("/");
         if (mime !== "image") continue;
 
-        reader.addEventListener("load", () => {
-          editor.command(insertImage, reader.result, target);
-        });
+        //İlk önce resmi upload ediyoruz...
+        let pictureURL;
+        try {
+          pictureURL = await this.state.client.mutate({
+            mutation: CREATE_POST_IMAGE,
+            variables: { picture: file }
+          });
+        } catch (ex) {
+          console.error(ex);
+        }
 
-        reader.readAsDataURL(file);
+        //Daha sonra da çekme işlemi yapıyoruz.
+
+        // this.state.client.query....
+
+        if (!pictureURL) {
+          editor.command(insertImage, pictureURL);
+        }
       }
       return;
     }
@@ -222,6 +249,7 @@ class TextEditor extends Component {
   onClickImage = event => {
     event.preventDefault();
     const src = window.prompt("Enter the URL of the image");
+
     if (!src) return;
     this.editor.command(insertImage, src);
   };
@@ -307,4 +335,4 @@ class TextEditor extends Component {
 }
 // Add a `renderMark` method to render marks.
 
-export default withStyles(styles)(TextEditor);
+export default withStyles(styles)(withApollo(TextEditor));

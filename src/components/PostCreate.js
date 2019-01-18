@@ -9,7 +9,7 @@ import { TAKE_USER } from "./UserDisplay";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 import jwt from "jsonwebtoken";
 
-const CREATE_POST = gql`
+export const CREATE_POST = gql`
   mutation CreatePost($title: String!, $contentJson: String!) {
     createPost(title: $title, content: $contentJson) {
       id

@@ -7,12 +7,13 @@ import { AUTH_TOKEN } from "./constants";
 
 import { ApolloProvider } from "react-apollo";
 import { ApolloClient } from "apollo-client";
-import { createHttpLink } from "apollo-link-http";
+// import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { BrowserRouter } from "react-router-dom";
 import { setContext } from "apollo-link-context";
+import { createUploadLink } from "apollo-upload-client";
 
-const httpLink = createHttpLink({
+const uploadAndHttpLink = createUploadLink({
   uri: "http://localhost:4000"
 });
 
@@ -28,7 +29,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(uploadAndHttpLink),
   cache: new InMemoryCache()
 });
 

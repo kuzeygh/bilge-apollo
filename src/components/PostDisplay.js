@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import TextEditor from "./TextEditor";
 import { Value } from "slate";
@@ -25,8 +25,21 @@ const TAKE_POST = gql`
 const styles = theme => ({
   root: {
     margin: "40px auto",
-    maxWidth: "800px",
-    padding: "1rem"
+    maxWidth: "1400px",
+    padding: "1rem",
+    backgroundColor: "white",
+    borderRadius: "0.50rem"
+  },
+  titleContainer: {
+    margin: "auto",
+    padding: "1rem",
+    width: "50%",
+    borderRadius: "0.5rem",
+    backgroundColor: "#1a237e"
+  },
+  title: {
+    color: "#fafafa",
+    textAlign: "center"
   },
   authorContainer: {
     display: "flex",
@@ -50,15 +63,19 @@ class PostDisplay extends Component {
           content = Value.fromJSON(content);
 
           return (
-            <Paper className={classes.root}>
-              <Typography variant="h4">{post.title}</Typography>
+            <div className={classes.root}>
+              <div className={classes.titleContainer}>
+                <Typography variant="h4" className={classes.title}>
+                  {post.title}
+                </Typography>
+              </div>
               <TextEditor value={content} readOnly={true} display />
               <div className={classes.authorContainer}>
                 <Typography variant="body1" color="secondary">
                   {post.author.email}
                 </Typography>
               </div>
-            </Paper>
+            </div>
           );
         }}
       </Query>

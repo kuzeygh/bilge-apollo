@@ -18,9 +18,10 @@ const styles = theme => ({
   root: {
     display: "flex"
   },
-  gridLeft: {
+  gridRight: {
     backgroundColor: "#e0e0e0",
-    height: "100vh"
+    height: "100vh",
+    padding: "0.25rem"
   },
   menuList: {
     margin: 0,
@@ -73,7 +74,7 @@ class MainLayout extends Component {
             </MenuList>
           </Grid>
 
-          <Grid item xs={10} className={classes.gridLeft}>
+          <Grid item xs={10} className={classes.gridRight}>
             <Switch>
               <Route exact path="/postcreate" component={PostCreate} />
               <Route path={`/user/:id`} component={UserDisplay} />

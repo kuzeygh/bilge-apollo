@@ -1,6 +1,7 @@
 Öncelikli Yapılacaklar:
-2) Editor içinde image eklemeye yap.
-3) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
+1) Editor içinde image eklemeye yap.
+2) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
+3) Hesaptan yayımdaki makaleleri gösterdikten sonra tekrar o tabda kalmalı.
 
 
 Düşük öncelikli yapılacaklar.

@@ -2,15 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import {
-  Typography,
-  Paper,
-  List,
-  AppBar,
-  Tabs,
-  Tab,
-  ListItem
-} from "@material-ui/core";
+import { Typography, Paper, List, AppBar, Tabs, Tab } from "@material-ui/core";
 import PostListItem from "./PostListItem";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 import jwt from "jsonwebtoken";
@@ -126,28 +118,24 @@ class UserDisplay extends Component {
                     >
                       <TabContainer dir={theme.direction}>
                         <List component="nav">
-                          <ListItem>
-                            {notPublishedPosts.map(post => (
-                              <PostListItem
-                                post={post}
-                                key={post.id}
-                                user={user}
-                              />
-                            ))}
-                          </ListItem>
+                          {notPublishedPosts.map(post => (
+                            <PostListItem
+                              post={post}
+                              key={post.id}
+                              user={user}
+                            />
+                          ))}
                         </List>
                       </TabContainer>
                       <TabContainer dir={theme.direction}>
                         <List component="nav">
-                          <ListItem button>
-                            {publishedPosts.map(post => (
-                              <PostListItem
-                                post={post}
-                                key={post.id}
-                                user={user}
-                              />
-                            ))}
-                          </ListItem>
+                          {publishedPosts.map(post => (
+                            <PostListItem
+                              post={post}
+                              key={post.id}
+                              user={user}
+                            />
+                          ))}
                         </List>
                       </TabContainer>
                     </SwipeableViews>
@@ -164,7 +152,7 @@ class UserDisplay extends Component {
 
 function TabContainer({ children, dir }) {
   return (
-    <Typography componet="div" dir={dir} style={{ padding: 8 * 3 }}>
+    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
       {children}
     </Typography>
   );

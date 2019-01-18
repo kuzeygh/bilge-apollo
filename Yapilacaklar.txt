@@ -1,7 +1,15 @@
 Yapılacaklar:
 
-1) User-Display ekranından aşağıdaki post list item ile ilgili olan kısım düzeltilecek
+
 2) Düzenleme butonuna bastıktan sonra text editore focus işlemi yapılacak.
+3) Text editore butonlar koy
+4) Editor içinde image eklemeye yap.
+5) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
+
 
 Yapılanlar:
-1) Post edit kısmını çalıştır.
+S.1) Post edit kısmını çalıştır.
+S.2) User-Display ekranından aşağıdaki post list item ile ilgili olan kısım düzeltilecek
+  C.2) Sorun Typograhpy de kullanılan component propunu componen olarak verdiğim için meydana geldi.
+S.3) Bir kere düzenleye bastıkdan sonra ardında ikinci gidişte query sıkıntısı var.
+  C.3) Sorun Query componentina fetchPolicy="network-only" verilerek çözüldü.

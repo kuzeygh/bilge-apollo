@@ -21,6 +21,7 @@ const TAKE_POST = gql`
 class TextEditorQuery extends Component {
   render() {
     const { postId } = this.props;
+
     return (
       <div>
         <Query
@@ -29,11 +30,12 @@ class TextEditorQuery extends Component {
           onCompleted={data => {
             this.props.onCompleted(data);
           }}
+          fetchPolicy="network-only"
         >
-          {({ loading, error }) => {
+          {({ loading, error, data }) => {
             if (loading) return <div>Loading...</div>;
             if (error) return <div>Error...</div>;
-            return null;
+            return true;
           }}
         </Query>
       </div>

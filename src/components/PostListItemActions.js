@@ -56,7 +56,7 @@ class PostListItemActions extends Component {
     const { postId } = this.props;
     const userId = this.props.user.id;
     return (
-      <div>
+      <React.Fragment>
         <IconButton
           buttonRef={node => {
             this.anchorEl = node;
@@ -72,7 +72,7 @@ class PostListItemActions extends Component {
           anchorEl={this.anchorEl}
           transition
           disablePortal
-          placement={"right"}
+          placement={"left"}
         >
           {({ TransitionProps, placement }) => (
             <Grow
@@ -80,7 +80,7 @@ class PostListItemActions extends Component {
               id="menu-list-grow"
               style={{
                 transfromOrigin:
-                  placement === "right" ? "right top" : "right bottom"
+                  placement === "left" ? "left top" : "left bottom"
               }}
             >
               <Paper>
@@ -139,7 +139,7 @@ class PostListItemActions extends Component {
             </Grow>
           )}
         </Popper>
-      </div>
+      </React.Fragment>
     );
   }
 }

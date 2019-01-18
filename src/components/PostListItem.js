@@ -6,7 +6,8 @@ import PostListItemActions from "./PostListItemActions";
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    margin: "20px"
   },
   titleContainer: {
     width: "75%"

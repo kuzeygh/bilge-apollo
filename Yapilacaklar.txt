@@ -1,0 +1,7 @@
+Yapılacaklar:
+
+1) User-Display ekranından aşağıdaki post list item ile ilgili olan kısım düzeltilecek
+2) Düzenleme butonuna bastıktan sonra text editore focus işlemi yapılacak.
+
+Yapılanlar:
+1) Post edit kısmını çalıştır.

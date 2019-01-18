@@ -34,6 +34,7 @@ class TextEditor extends Component {
           renderMark={this.renderMark}
           readOnly={this.props.readOnly}
           placeholder={this.props.placeholder}
+          ref={this.props.refPostEditor}
         />
       </div>
     );

@@ -1,25 +1,21 @@
 import React, { Component } from "react";
-import { Query } from "react-apollo";
+import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { Typography, Paper } from "@material-ui/core";
+import { Button, Typography, TextField, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import TextEditorDisplay from "./TextEditorDisplay";
 import TextEditor from "./TextEditor";
+import TextEditorQuery from "./TextEditorQuery";
 import { Value } from "slate";
-import { initialValue } from "../constants";
+import { AUTH_TOKEN, APP_SECRET, initialValue } from "../constants";
+import jwt from "jsonwebtoken";
 
-const TAKE_POST = gql`
-  query TakePost($postId: ID!) {
-    postById(postId: $postId) {
+const UPDATE_POST = gql`
+  mutation UpdatePost($postId: ID!, $title: String!, $contentJson: String!) {
+    updatePost(postId: $postId, title: $title, content: $contentJson) {
       id
       title
       content
       published
-      author {
-        id
-        name
-        email
-      }
     }
   }
 `;
@@ -33,19 +29,48 @@ const styles = theme => ({
   authorContainer: {
     display: "flex",
     justifyContent: "flex-end"
+  },
+
+  titleContainer: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  contentContainer: {
+    padding: "20px",
+    borderTop: "1px solid #ccc"
+  },
+  buttons: {
+    margin: theme.spacing.unit
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "center"
   }
 });
 
 class PostEdit extends Component {
   state = {
-    title: "",
+    title: "Yükleniyor",
     content: initialValue,
+    firstQuery: false,
     created: false
   };
 
   handleTextEditor = ({ value }) => {
-    this.setState({ content: value });
+    this.setState({
+      content: value
+    });
   };
+
+  afterQuery(data) {
+    let content = data.postById.content;
+    const post = data.postById;
+    const { title } = post;
+    content = JSON.parse(content);
+    content = Value.fromJSON(content);
+    const firstQuery = true;
+    this.setState({ content, title, firstQuery });
+  }
 
   render() {
     const { classes } = this.props;
@@ -54,90 +79,67 @@ class PostEdit extends Component {
     const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
 
     const postId = this.props.match.params.id;
-    const { classes } = this.props;
-
+    const { title, firstQuery } = this.state;
+    let { content } = this.state;
+    const contentJson = JSON.stringify(content);
+    console.log(contentJson);
     return (
-      <Query query={TAKE_POST} variables={{ postId }}>
-        {({ loading, error, data }) => {
-          if (loading) return <div>Loading...</div>;
-          if (error) return <div>Error...</div>;
+      <Paper className={classes.root}>
+        {!firstQuery && (
+          <TextEditorQuery
+            postId={postId}
+            onCompleted={data => this.afterQuery(data)}
+          />
+        )}
 
-          const post = data.postById;
-          let title = post.title;
-          let content = post.content;
-          content = JSON.parse(content);
-          content = Value.fromJSON(content);
-          return (
-            <Paper className={classes.root}>
-              <div className={classes.rootContainer}>
-                <Paper elevetion={24} className={classes.root}>
-                  <div>
-                    <Typography variant="h5" color="primary">
-                      Başlık ve içeriklerini doldurun
-                    </Typography>
-                    <div className={classes.titleContainer}>
-                      <TextField
-                        placeholder="Başlık"
-                        label="Başlık"
-                        margin="normal"
-                        id="title"
-                        fullWidth
-                        value={title}
-                        onChange={event =>
-                          this.setState({ title: event.target.value })
-                        }
-                      />
-                    </div>
+        <div>
+          <Typography
+            variant="h5"
+            color="primary"
+            className={classes.titleContainer}
+          >
+            Başlık ve içeriklerini doldurun
+          </Typography>
+        </div>
+        <div>
+          <TextField
+            placeholder="Başlık"
+            label="Başlık"
+            margin="normal"
+            id="title"
+            fullWidth
+            value={this.state.title}
+            onChange={event => this.setState({ title: event.target.value })}
+          />
+        </div>
 
-                    <div className={classes.contentContainer}>
-                      <TextEditor
-                        onChange={this.handleTextEditor}
-                        value={content}
-                        placeholder="İçerik"
-                        readOnly={false}
-                      />
-                    </div>
-                  </div>
-                  <div className={classes.buttonContainer}>
-                    <Mutation
-                      mutation={CREATE_POST}
-                      variables={{ title, contentJson }}
-                      update={(cache, { data: { createPost } }) => {
-                        const data = cache.readQuery({
-                          query: TAKE_USER,
-                          variables: { userId }
-                        });
-                        data.userById.posts.unshift(createPost);
-
-                        cache.writeQuery({
-                          query: TAKE_USER,
-                          data
-                        });
-                      }}
-                      onCompleted={() => {
-                        this.setState({ created: true });
-                        this.props.history.push(`/user/${userId}`);
-                      }}
-                    >
-                      {createPostMutation => (
-                        <Button
-                          variant="contained"
-                          color="default"
-                          className={classes.buttons}
-                          disabled
-                          onClick={createPostMutation}
-                        >
-                          Güncelle
-                        </Button>
-                      )}
-                    </Mutation>
-                  </div>
-                </Paper>
-              </div>
-            </Paper>
-          );
-        }}
-      </Query>
+        <div className={classes.contentContainer}>
+          <TextEditor
+            onChange={({ value }) => this.setState({ content: value })}
+            value={this.state.content}
+          />
+        </div>
+        <div className={classes.buttonContainer}>
+          <Mutation
+            mutation={UPDATE_POST}
+            variables={{ postId, title, contentJson }}
+            onCompleted={() => {
+              this.props.history.push(`/user/${userId}`);
+            }}
+          >
+            {updatePostMutation => (
+              <Button
+                variant="contained"
+                color="default"
+                className={classes.buttons}
+                onClick={updatePostMutation}
+              >
+                Güncelle
+              </Button>
+            )}
+          </Mutation>
+        </div>
+      </Paper>
     );
   }
 }

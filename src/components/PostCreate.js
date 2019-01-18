@@ -89,7 +89,6 @@ class PostCreate extends Component {
                 onChange={this.handleTextEditor}
                 value={content}
                 placeholder="İçerik"
-                readOnly={false}
               />
             </div>
           </div>

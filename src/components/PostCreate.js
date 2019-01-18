@@ -73,6 +73,7 @@ class PostCreate extends Component {
             <Typography variant="h5" color="primary">
               Başlık ve içeriklerini doldurun
             </Typography>
+
             <div className={classes.titleContainer}>
               <TextField
                 placeholder="Başlık"

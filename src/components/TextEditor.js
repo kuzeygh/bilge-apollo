@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Editor } from "slate-react";
-import { Button, Toolbar } from "@material-ui/core";
+import { Button, Toolbar, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 // const existingValue = JSON.parse(localStorage.getItem("content"));
@@ -12,6 +12,18 @@ import { withStyles } from "@material-ui/core/styles";
 //   MarkHotKey({ key: "~", type: "strikethrough" }),
 //   MarkHotKey({ key: "u", type: "underline" })
 // ];
+
+function wrapLink(editor, href) {
+  editor.wrapInline({
+    type: "link",
+    data: { href }
+  });
+  editor.moveToEnd();
+}
+
+function unwrapLink(editor) {
+  editor.unwrapInline("link");
+}
 
 const styles = theme => ({
   buttonContainer: {
@@ -54,8 +66,70 @@ class TextEditor extends Component {
     }
   };
 
+  renderNode = (props, editor, next) => {
+    const { attributes, children, node } = props;
+    switch (node.type) {
+      case "link": {
+        const { data } = node;
+        const href = data.get("href");
+        console.log(attributes, href);
+        return (
+          <Typography
+            {...attributes}
+            href={href}
+            component="a"
+            inline
+            cursor="pointer"
+            target="_blank"
+          >
+            {children}
+          </Typography>
+        );
+      }
+      default: {
+        return next();
+      }
+    }
+  };
+
   ref = editor => {
     this.editor = editor;
+  };
+
+  hasLinks = () => {
+    const { value } = this.props;
+    return value.inlines.some(inline => inline.type === "link");
+  };
+
+  onClickLink = event => {
+    event.preventDefault();
+    const { editor } = this;
+    const { value } = editor;
+    const hasLinks = this.hasLinks();
+
+    if (hasLinks) {
+      editor.command(unwrapLink);
+    } else if (value.selection.isExpanded) {
+      const href = window.prompt("Enter the URL of the link");
+      if (href === null) {
+        return;
+      }
+
+      editor.command(wrapLink, href);
+    } else {
+      const href = window.prompt("Enter the URL of the link:");
+      if (href === null) {
+        return;
+      }
+      const text = window.prompt("Enter the text for the link");
+      if (text == null) {
+        return;
+      }
+      editor
+        .insertText(text)
+        .moveFocusBackward(text.length)
+        .command(wrapLink, href);
+    }
   };
 
   render() {
@@ -65,28 +139,28 @@ class TextEditor extends Component {
         {!this.props.display && (
           <Toolbar>
             <Button
-              variant="raised"
+              variant="contained"
               className={classes.editorButtons}
               onClick={event => this.MarkHotKey(event, { type: "bold" })}
             >
               Kalın
             </Button>
             <Button
-              variant="raised"
+              variant="contained"
               className={classes.editorButtons}
               onClick={event => this.MarkHotKey(event, { type: "code" })}
             >
               Kod
             </Button>
             <Button
-              variant="raised"
+              variant="contained"
               className={classes.editorButtons}
               onClick={event => this.MarkHotKey(event, { type: "italic" })}
             >
               İtalic
             </Button>
             <Button
-              variant="raised"
+              variant="contained"
               className={classes.editorButtons}
               onClick={event =>
                 this.MarkHotKey(event, { type: "strikethrough" })
@@ -95,11 +169,18 @@ class TextEditor extends Component {
               Üstü Çizili
             </Button>
             <Button
-              variant="raised"
+              variant="contained"
               className={classes.editorButtons}
               onClick={event => this.MarkHotKey(event, { type: "underline" })}
             >
               Alt Yazılı
+            </Button>
+            <Button
+              variant="contained"
+              className={classes.editorButtons}
+              onMouseDown={this.onClickLink}
+            >
+              Link
             </Button>
           </Toolbar>
         )}
@@ -113,6 +194,7 @@ class TextEditor extends Component {
             readOnly={this.props.readOnly}
             placeholder={this.props.placeholder}
             ref={this.ref}
+            renderNode={this.renderNode}
           />
         </div>
       </div>

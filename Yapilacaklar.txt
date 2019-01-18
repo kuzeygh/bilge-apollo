@@ -1,8 +1,10 @@
-Yapılacaklar:
-
+Öncelikli Yapılacaklar:
 2) Editor içinde image eklemeye yap.
 3) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
 
+
+Düşük öncelikli yapılacaklar.
+1) Editor edit veya create halindeyken hyperlink ler için preview özelliği ekle.
 
 Yapılanlar:
 S.1) Post edit kısmını çalıştır.
@@ -14,3 +16,5 @@ S.4) Düzenleme butonuna bastıktan sonra text editore focus işlemi yapılacak.
   C.4) TextField component' ına autoFocus propu verilerek sorun çözüldü.
 S.5) 1) Text editore butonlar koy
   C.5) event geçilerek yapıldı.
+S.6) Editor içine link ekle.
+  

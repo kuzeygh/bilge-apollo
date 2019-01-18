@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { Editor } from "slate-react";
+import { Editor, getEventRange, getEventTransfer } from "slate-react";
+import { Block } from "slate";
 import { Button, Toolbar, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import isUrl from "is-url";
+import ImageExtensions from "image-extensions";
 
 // const existingValue = JSON.parse(localStorage.getItem("content"));
 
@@ -23,6 +26,40 @@ function wrapLink(editor, href) {
 
 function unwrapLink(editor) {
   editor.unwrapInline("link");
+}
+
+const schema = {
+  document: {
+    last: { type: "paragraph" },
+    normalize: (editor, { code, node, child }) => {
+      switch (code) {
+        case "last_child_type_invalid": {
+          const paragraph = Block.create("paragraph");
+          return editor.insertNodeByKey(node.key, node.nodes.size, paragraph);
+        }
+      }
+    }
+  },
+  blocks: {
+    image: {
+      isVoid: true
+    }
+  }
+};
+
+function insertImage(editor, src, target) {
+  if (target) {
+    editor.select(target);
+  }
+
+  editor.insertBlock({
+    type: "image",
+    data: { src }
+  });
+}
+
+function isImage(url) {
+  return !!ImageExtensions.find(url.endsWith);
 }
 
 const styles = theme => ({
@@ -69,10 +106,28 @@ class TextEditor extends Component {
   renderNode = (props, editor, next) => {
     const { attributes, children, node } = props;
     switch (node.type) {
+      case "image": {
+        const src = node.data.get("src");
+
+        return (
+          <Typography
+            {...attributes}
+            src={src}
+            component="img"
+            style={{
+              maxWidth: "100%",
+              maxHeight: "20rem",
+              border: "none",
+              display: "block",
+              borderRadius: "0.5rem"
+            }}
+          />
+        );
+      }
       case "link": {
         const { data } = node;
         const href = data.get("href");
-        console.log(attributes, href);
+
         return (
           <Typography
             {...attributes}
@@ -132,6 +187,45 @@ class TextEditor extends Component {
     }
   };
 
+  onDropOrPaste = (event, editor, next) => {
+    const target = getEventRange(event, editor);
+    if (!target && event.type === "drop") return next();
+
+    const transfer = getEventTransfer(event);
+    const { type, text, files } = transfer;
+
+    if (type === "files") {
+      for (const file of files) {
+        const reader = new FileReader();
+        const [mime] = file.type.split("/");
+        if (mime !== "image") continue;
+
+        reader.addEventListener("load", () => {
+          editor.command(insertImage, reader.result, target);
+        });
+
+        reader.readAsDataURL(file);
+      }
+      return;
+    }
+
+    if (type === "text") {
+      if (!isUrl(text)) return next();
+      if (!isImage(text)) return next();
+      editor.command(insertImage, text, target);
+      return;
+    }
+
+    next();
+  };
+
+  onClickImage = event => {
+    event.preventDefault();
+    const src = window.prompt("Enter the URL of the image");
+    if (!src) return;
+    this.editor.command(insertImage, src);
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -182,6 +276,13 @@ class TextEditor extends Component {
             >
               Link
             </Button>
+            <Button
+              variant="contained"
+              className={classes.editorButtons}
+              onMouseDown={this.onClickImage}
+            >
+              Resim
+            </Button>
           </Toolbar>
         )}
 
@@ -195,6 +296,9 @@ class TextEditor extends Component {
             placeholder={this.props.placeholder}
             ref={this.ref}
             renderNode={this.renderNode}
+            schema={schema}
+            onDrop={this.onDropOrPaste}
+            onPaste={this.onDropOrPaste}
           />
         </div>
       </div>

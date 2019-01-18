@@ -26,7 +26,7 @@ const styles = theme => ({
   root: {
     margin: "40px auto",
     maxWidth: "1400px",
-    padding: "1rem",
+    padding: "0.5rem",
     backgroundColor: "white",
     borderRadius: "0.50rem"
   },
@@ -36,7 +36,7 @@ const styles = theme => ({
   },
   titleContainer: {
     padding: "1rem",
-    width: "50%",
+    width: "75%",
     borderRadius: "0.5rem",
     backgroundColor: "#1a237e"
   },

@@ -95,6 +95,9 @@ const styles = theme => ({
   },
   editorButtons: {
     marginRight: "10px"
+  },
+  boldFont: {
+    fontWeight: "bold"
   }
 });
 
@@ -111,17 +114,33 @@ class TextEditor extends Component {
   }
 
   renderMark = (props, editor, next) => {
+    const { attributes } = props;
     switch (props.mark.type) {
       case "bold":
-        return <strong>{props.children}</strong>;
-      case "code":
-        return <code>{props.children}</code>;
+        return (
+          <Typography {...attributes} style={{ fontWeight: "bold" }} inline>
+            {props.children}
+          </Typography>
+        );
+
       case "italic":
-        return <em>{props.children}</em>;
+        return (
+          <Typography {...attributes} component="em" inline>
+            {props.children}
+          </Typography>
+        );
       case "strikethrough":
-        return <del>{props.children}</del>;
+        return (
+          <Typography {...attributes} component="del" inline>
+            {props.children}
+          </Typography>
+        );
       case "underline":
-        return <u>{props.children}</u>;
+        return (
+          <Typography {...attributes} component="u" inline>
+            {props.children}
+          </Typography>
+        );
       default:
         return next();
     }
@@ -130,6 +149,14 @@ class TextEditor extends Component {
   renderNode = (props, editor, next) => {
     const { attributes, children, node } = props;
     switch (node.type) {
+      case "paragraph": {
+        return (
+          <Typography {...attributes} variant="body1">
+            {children}
+          </Typography>
+        );
+      }
+
       case "image": {
         const src = node.data.get("src");
 
@@ -139,9 +166,12 @@ class TextEditor extends Component {
             src={src}
             component="img"
             style={{
-              maxWidth: "100%",
-              maxHeight: "20rem",
-              border: "none",
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "50%",
+              height: "50%",
+              textAlign: "center",
               display: "block",
               borderRadius: "0.5rem"
             }}
@@ -229,14 +259,12 @@ class TextEditor extends Component {
             variables: { picture: file }
           })
           .then(response1 => {
-            console.log(response1);
             return this.state.client
               .query({
                 query: QUERY_POST_IMAGE,
                 variables: { imageId: response1.data.createPostImage.id }
               })
               .then(response2 => {
-                console.log(response2);
                 return editor.command(
                   insertImage,
                   response2.data.imageById.pictureURL,
@@ -280,13 +308,7 @@ class TextEditor extends Component {
             >
               Kalın
             </Button>
-            <Button
-              variant="contained"
-              className={classes.editorButtons}
-              onClick={event => this.MarkHotKey(event, { type: "code" })}
-            >
-              Kod
-            </Button>
+
             <Button
               variant="contained"
               className={classes.editorButtons}

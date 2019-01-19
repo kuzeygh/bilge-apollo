@@ -1,8 +1,7 @@
 
 Öncelikli Yapılacaklar:
-1) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
-2) Hesaptan yayımdaki makaleleri gösterdikten sonra tekrar o tabda kalmalı.
-3) Editor de yer alan <p>, <code> vs. elementlerin material ui Typograhpy componentı ile değiştir.
+2) Editor de yer alan <p>, <code> vs. elementlerin material ui Typograhpy componentı ile değiştir.
+3) Hesaptan yayımdaki makaleleri gösterdikten sonra tekrar o tabda kalmalı.
 
 
 Düşük öncelikli yapılacaklar.
@@ -22,3 +21,4 @@ S.6) Editor içine link ekle.
 S.7) Editor içinde image eklemeye yap
   C.7) apollo-upload-client kullanılarak createUpdateLink kuruldu server tarafındada data model ve 
     ... serverdaki mutation ve resolver işlemleri yapıldı.
+S.8) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.

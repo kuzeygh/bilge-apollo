@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+
+import "typeface-roboto";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { AUTH_TOKEN } from "./constants";
@@ -12,6 +13,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { BrowserRouter } from "react-router-dom";
 import { setContext } from "apollo-link-context";
 import { createUploadLink } from "apollo-upload-client";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const uploadAndHttpLink = createUploadLink({
   uri: "http://localhost:4000"
@@ -34,11 +36,15 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <BrowserRouter>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </BrowserRouter>,
+  <React.Fragment>
+    <CssBaseline />
+
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </BrowserRouter>
+  </React.Fragment>,
 
   document.getElementById("root")
 );

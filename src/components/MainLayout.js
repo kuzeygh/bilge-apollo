@@ -16,16 +16,17 @@ import jwt from "jsonwebtoken";
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    width: "100%",
+    height: "150vh"
   },
   gridRight: {
-    backgroundColor: "#e0e0e0",
-    height: "100vh",
-    padding: "0.25rem"
+    padding: "3rem"
   },
   menuList: {
-    margin: 0,
-    paddingTop: 0
+    backgroundColor: "#acacac",
+    display: "flex",
+    flexDirection: "column"
   }
 });
 

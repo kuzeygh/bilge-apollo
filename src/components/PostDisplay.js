@@ -24,9 +24,9 @@ const TAKE_POST = gql`
 
 const styles = theme => ({
   root: {
-    margin: "40px auto",
     maxWidth: "1400px",
-    padding: "0.5rem",
+    margin: "auto",
+    padding: "1rem",
     backgroundColor: "white",
     borderRadius: "0.50rem"
   },

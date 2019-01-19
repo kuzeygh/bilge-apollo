@@ -10,8 +10,8 @@ import SwipeableViews from "react-swipeable-views";
 
 const styles = theme => ({
   root: {
-    margin: "40px auto",
-    maxWidth: "800px",
+    maxWidth: "1400px",
+    margin: "auto",
     padding: "1rem"
   },
   headerContainer: {
@@ -84,7 +84,7 @@ class UserDisplay extends Component {
               post => post.published === false
             );
             return (
-              <Paper className={classes.root}>
+              <React.Fragment>
                 <div className={classes.headerContainer}>
                   <Typography variant="h4" className={classes.textFields}>
                     {user.name}
@@ -141,7 +141,7 @@ class UserDisplay extends Component {
                     </SwipeableViews>
                   </div>
                 </div>
-              </Paper>
+              </React.Fragment>
             );
           }}
         </Query>

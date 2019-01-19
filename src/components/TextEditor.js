@@ -21,6 +21,15 @@ import gql from "graphql-tag";
 const CREATE_POST_IMAGE = gql`
   mutation CreatePostImage($picture: Upload!) {
     createPostImage(picture: $picture) {
+      id
+      pictureURL
+    }
+  }
+`;
+
+const QUERY_POST_IMAGE = gql`
+  query ImageById($imageId: ID!) {
+    imageById(imageId: $imageId) {
       pictureURL
     }
   }
@@ -202,7 +211,7 @@ class TextEditor extends Component {
     }
   };
 
-  onDropOrPaste = async (event, editor, next) => {
+  onDropOrPaste = (event, editor, next) => {
     const target = getEventRange(event, editor);
     if (!target && event.type === "drop") return next();
 
@@ -214,24 +223,28 @@ class TextEditor extends Component {
         const [mime] = file.type.split("/");
         if (mime !== "image") continue;
 
-        //İlk önce resmi upload ediyoruz...
-        let pictureURL;
-        try {
-          pictureURL = await this.state.client.mutate({
+        this.state.client
+          .mutate({
             mutation: CREATE_POST_IMAGE,
             variables: { picture: file }
-          });
-        } catch (ex) {
-          console.error(ex);
-        }
-
-        //Daha sonra da çekme işlemi yapıyoruz.
-
-        // this.state.client.query....
-
-        if (!pictureURL) {
-          editor.command(insertImage, pictureURL);
-        }
+          })
+          .then(response1 => {
+            console.log(response1);
+            return this.state.client
+              .query({
+                query: QUERY_POST_IMAGE,
+                variables: { imageId: response1.data.createPostImage.id }
+              })
+              .then(response2 => {
+                console.log(response2);
+                return editor.command(
+                  insertImage,
+                  response2.data.imageById.pictureURL,
+                  target
+                );
+              });
+          })
+          .catch(error => console.log(error));
       }
       return;
     }

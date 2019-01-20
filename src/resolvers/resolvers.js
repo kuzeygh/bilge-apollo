@@ -1,7 +1,8 @@
 const resolvers = {
   Mutation: {
     updateTabIndex: (_, { tabIndex }, { cache }) => {
-      cache.writeData({ data: { tabIndex } });
+      const data = { tabStatus: { tabIndex, __typename: "TabStatus" } };
+      cache.writeData({ data });
       return null;
     }
   }

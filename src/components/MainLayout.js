@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UserDisplay from "./UserDisplay";
+import UserDisplayQuery from "./UserDisplayQuery";
 import UserLogin from "./UserLogin";
 import PostCreate from "./PostCreate";
 import PostCreateWithImage from "./PostCreateWithImage";
@@ -79,7 +79,7 @@ class MainLayout extends Component {
           <Grid item xs={10} className={classes.gridRight}>
             <Switch>
               <Route exact path="/postcreate" component={PostCreate} />
-              <Route path={`/user/:id`} component={UserDisplay} />
+              <Route path={`/user/:id`} component={UserDisplayQuery} />
               <Route exact path="/userlogin" component={UserLogin} />
               <Route exact path={`/post/:id`} component={PostDisplay} />
               <Route path={`/post/edit/:id`} component={PostEdit} />

@@ -3,9 +3,11 @@
 2) Aşağıdaki maddeyi çözebilmek için app seviyesinde bir değişken tutma ihtiyacı var. Çünkü componentler yıkıla yıkıla geldiğinden dolayı
   ... bunun bir şekilde en yukarıdan default ile verilerek çekilmesi gerekmektedir.
 3) Hesaptan yayımdaki makaleleri gösterdikten sonra tekrar o tabda kalmalı.
-
-
 4) Editorde yer alan hyperlink componentını material ui Link component ile değiştir.
+5) PostDetail basıldığı zaman tekrar query çekmemize gerek yok bunun için lokal state management kullanılmalı
+6) UserDisplay componentından yayımla veya postun kendisi sorgulanmak istenirse cachedeki veriyi kullan.
+7) Text editor içindeki mutate ve query aynı anda yapılan işlem client.mutate fonksiyonunun refetchQueries opsiyonunu kullan.
+8) UserDisplay ekranından f5 yapınca hata alınıyor.
 
 
 Düşük öncelikli yapılacaklar.

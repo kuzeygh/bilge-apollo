@@ -23,7 +23,7 @@ class TextEditorQuery extends Component {
     const { postId } = this.props;
 
     return (
-      <div>
+      <React.Fragment>
         <Query
           query={TAKE_POST}
           variables={{ postId }}
@@ -38,7 +38,7 @@ class TextEditorQuery extends Component {
             return true;
           }}
         </Query>
-      </div>
+      </React.Fragment>
     );
   }
 }

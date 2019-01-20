@@ -1,5 +1,8 @@
 const defaults = {
-  tabIndex: 0
+  tabStatus: {
+    __typename: "TabStatus",
+    tabIndex: 0
+  }
 };
 
 export default defaults;

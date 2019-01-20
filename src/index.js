@@ -44,12 +44,12 @@ const stateLink = withClientState({
   defaults
 });
 
+// Linkler alınarak client için option olarak veriliyor
+
 const client = new ApolloClient({
   cache,
   link: stateLink.concat(authLink.concat(uploadAndHttpLink))
 });
-
-console.log(client);
 
 ReactDOM.render(
   <React.Fragment>

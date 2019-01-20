@@ -5,7 +5,7 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import TextEditor from "./TextEditor";
 import { initialValue } from "../constants";
-import { TAKE_USER } from "./UserDisplay";
+import { TAKE_USER } from "./UserDisplayQuery";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 import jwt from "jsonwebtoken";
 

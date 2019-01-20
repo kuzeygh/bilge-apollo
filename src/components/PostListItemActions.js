@@ -11,7 +11,7 @@ import {
 import { CreateTwoTone } from "@material-ui/icons";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { TAKE_USER } from "./UserDisplay";
+import { TAKE_USER } from "./UserDisplayQuery";
 import { publishedPostData } from "../util.js";
 import { Link } from "react-router-dom";
 

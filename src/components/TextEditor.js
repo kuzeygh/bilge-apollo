@@ -102,10 +102,6 @@ const styles = theme => ({
 });
 
 class TextEditor extends Component {
-  state = {
-    client: this.props.client
-  };
-
   MarkHotKey(event, options) {
     event.preventDefault();
     const { type } = options;
@@ -252,13 +248,13 @@ class TextEditor extends Component {
         const [mime] = file.type.split("/");
         if (mime !== "image") continue;
 
-        this.state.client
+        this.props.client
           .mutate({
             mutation: CREATE_POST_IMAGE,
             variables: { picture: file }
           })
           .then(response1 => {
-            return this.state.client
+            return this.props.client
               .query({
                 query: QUERY_POST_IMAGE,
                 variables: { imageId: response1.data.createPostImage.id }

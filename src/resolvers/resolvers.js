@@ -1,9 +1,18 @@
+import gql from "graphql-tag";
+
 const resolvers = {
   Mutation: {
-    updateTabIndex: (_, { tabIndex }, { cache }) => {
-      const data = { tabStatus: { tabIndex, __typename: "TabStatus" } };
+    updateTabIndex: (_, args, { cache }) => {
+      const data = {
+        tabStatus: {
+          tabIndex: args.tabIndex,
+          __typename: "TabStatus"
+        }
+      };
+
       cache.writeData({ data });
-      return null;
+
+      return data;
     }
   }
 };

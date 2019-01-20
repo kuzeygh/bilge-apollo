@@ -5,6 +5,7 @@ import { withApollo } from "react-apollo";
 import { Typography, List, AppBar, Tabs, Tab } from "@material-ui/core";
 import PostListItem from "./PostListItem";
 import SwipeableViews from "react-swipeable-views";
+import { TAKE_USER } from "./UserDisplayQuery";
 
 const styles = theme => ({
   root: {
@@ -42,22 +43,34 @@ class UserDisplay extends Component {
     index: this.props.tabIndex
   };
 
-  handleChangeIndex = ({ index }) => {
-    const tabIndex = index;
-    this.props.client.mutate({
-      mutation: UPDATE_TAB_INDEX,
-      variables: { tabIndex }
-    });
+  handleChangeIndex = async ({ index }) => {
+    console.log(2);
+
     this.setState({ index });
   };
 
-  handleTabChange = (event, value) => {
+  handleTabChange = async (event, value) => {
     const tabIndex = value;
-    this.props.client.mutate({
+
+    const { data } = await this.props.client.mutate({
       mutation: UPDATE_TAB_INDEX,
       variables: { tabIndex }
     });
-    this.setState({ index: value });
+
+    const { userById } = await this.props.client.readQuery({
+      query: TAKE_USER,
+      variables: { userId: this.props.user.id }
+    });
+
+    userById.tabStatus = data.updateTabIndex.tabStatus;
+
+    this.props.client.writeQuery({
+      query: TAKE_USER,
+      variables: { userId: this.props.user.id },
+      data: { userById }
+    });
+
+    this.setState({ index: tabIndex });
   };
 
   render() {

@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 import jwt from "jsonwebtoken";
 import UserDisplay from "./UserDisplay";
+import { withApollo } from "react-apollo";
 
 export const TAKE_USER = gql`
   query TakeUser($userId: ID!) {
@@ -37,7 +38,6 @@ class UserDisplayQuery extends Component {
           const user = data.userById;
           const { posts } = data.userById;
           const { tabIndex } = data.userById.tabStatus;
-          console.log(tabIndex);
 
           return <UserDisplay user={user} posts={posts} tabIndex={tabIndex} />;
         }}
@@ -46,4 +46,4 @@ class UserDisplayQuery extends Component {
   }
 }
 
-export default UserDisplayQuery;
+export default withApollo(UserDisplayQuery);

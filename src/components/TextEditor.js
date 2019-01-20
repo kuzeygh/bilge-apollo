@@ -166,7 +166,6 @@ class TextEditor extends Component {
             src={src}
             component="img"
             style={{
-              display: "block",
               marginLeft: "auto",
               marginRight: "auto",
               width: "50%",

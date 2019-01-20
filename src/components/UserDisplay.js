@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Typography, Paper, List, AppBar, Tabs, Tab } from "@material-ui/core";
+import { Typography, List, AppBar, Tabs, Tab } from "@material-ui/core";
 import PostListItem from "./PostListItem";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 import jwt from "jsonwebtoken";
@@ -49,17 +49,23 @@ export const TAKE_USER = gql`
   }
 `;
 
+const UPDATE_TAB_INDEX = gql`
+  mutation UpdateTabIndex($tabIndex: Int!) {
+    updateTabIndex(tabIndex: $tabIndex) @client
+  }
+`;
+
 class UserDisplay extends Component {
   state = {
     value: 0
   };
 
-  handleTabChange = (event, value) => {
-    this.setState({ value });
-  };
-
   handleChangeIndex = index => {
     this.setState({ value: index });
+  };
+
+  handleTabChange = (event, value) => {
+    this.setState({ value });
   };
 
   render() {
@@ -71,9 +77,11 @@ class UserDisplay extends Component {
     return (
       <div className={classes.root}>
         <Query query={TAKE_USER} variables={{ userId }}>
-          {({ loading, error, data }) => {
+          {({ loading, error, data, client }) => {
             if (loading) return <div>Loading...</div>;
             if (error) return <div>Error...</div>;
+
+            console.log(client.cache);
 
             const user = data.userById;
             const posts = data.userById.posts;

@@ -1,7 +1,11 @@
 
 Öncelikli Yapılacaklar:
-2) Editor de yer alan <p>, <code> vs. elementlerin material ui Typograhpy componentı ile değiştir.
+2) Aşağıdaki maddeyi çözebilmek için app seviyesinde bir değişken tutma ihtiyacı var. Çünkü componentler yıkıla yıkıla geldiğinden dolayı
+  ... bunun bir şekilde en yukarıdan default ile verilerek çekilmesi gerekmektedir.
 3) Hesaptan yayımdaki makaleleri gösterdikten sonra tekrar o tabda kalmalı.
+
+
+4) Editorde yer alan hyperlink componentını material ui Link component ile değiştir.
 
 
 Düşük öncelikli yapılacaklar.
@@ -22,3 +26,5 @@ S.7) Editor içinde image eklemeye yap
   C.7) apollo-upload-client kullanılarak createUpdateLink kuruldu server tarafındada data model ve 
     ... serverdaki mutation ve resolver işlemleri yapıldı.
 S.8) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
+S.9) Editor de yer alan <p>, <code> vs. elementlerin material ui Typograhpy componentı ile değiştir.
+C.9) Sorun Typograhpy style kısmına 

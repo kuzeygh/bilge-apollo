@@ -8,12 +8,14 @@ import { AUTH_TOKEN } from "./constants";
 
 import { ApolloProvider } from "react-apollo";
 import { ApolloClient } from "apollo-client";
-// import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { BrowserRouter } from "react-router-dom";
 import { setContext } from "apollo-link-context";
 import { createUploadLink } from "apollo-upload-client";
+import { withClientState } from "apollo-link-state";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import defaults from "./resolvers/defaults";
+import resolvers from "./resolvers/resolvers";
 
 const uploadAndHttpLink = createUploadLink({
   uri: "http://localhost:4000"
@@ -30,10 +32,24 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const client = new ApolloClient({
-  link: authLink.concat(uploadAndHttpLink),
-  cache: new InMemoryCache()
+// Cache Kuruluyor
+
+const cache = new InMemoryCache();
+
+// Apollo'da local state kullanımı için defaults ve resolversler geçiyor.
+
+const stateLink = withClientState({
+  cache,
+  resolvers,
+  defaults
 });
+
+const client = new ApolloClient({
+  cache,
+  link: stateLink.concat(authLink.concat(uploadAndHttpLink))
+});
+
+console.log(client);
 
 ReactDOM.render(
   <React.Fragment>

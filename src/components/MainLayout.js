@@ -18,7 +18,8 @@ const styles = theme => ({
   root: {
     display: "flex",
     width: "100%",
-    height: "150vh"
+    height: "150vh",
+    backgroundColor: "#cfd8dc"
   },
   gridRight: {
     padding: "3rem"

@@ -1,17 +1,18 @@
 
 Öncelikli Yapılacaklar:
-2) Aşağıdaki maddeyi çözebilmek için app seviyesinde bir değişken tutma ihtiyacı var. Çünkü componentler yıkıla yıkıla geldiğinden dolayı
-  ... bunun bir şekilde en yukarıdan default ile verilerek çekilmesi gerekmektedir.
-3) Hesaptan yayımdaki makaleleri gösterdikten sonra tekrar o tabda kalmalı.
-4) Editorde yer alan hyperlink componentını material ui Link component ile değiştir.
-5) PostDetail basıldığı zaman tekrar query çekmemize gerek yok bunun için lokal state management kullanılmalı
-6) UserDisplay componentından yayımla veya postun kendisi sorgulanmak istenirse cachedeki veriyi kullan.
-7) Text editor içindeki mutate ve query aynı anda yapılan işlem client.mutate fonksiyonunun refetchQueries opsiyonunu kullan.
-8) UserDisplay ekranından f5 yapınca hata alınıyor.
+
+2) PostDetail basıldığı zaman tekrar query çekmemize gerek yok bunun için lokal state management kullanılmalı
+3) UserDisplay componentından yayımla veya postun kendisi sorgulanmak istenirse cachedeki veriyi kullan.
+4) Text editor içindeki mutate ve query aynı anda yapılan işlem client.mutate fonksiyonunun refetchQueries opsiyonunu kullan.
+5) UserDisplay ekranından f5 yapınca hata alınıyor.
+6) TextEditorun user interfacedinde butonları material ui de kullanılan button grubun içine al ve ek olarak user interfacedinde
+  ... biraz değişiklik yap.
+
 
 
 Düşük öncelikli yapılacaklar.
 1) Editor edit veya create halindeyken hyperlink ler için preview özelliği ekle.
+2) Butonlardan altı çizgili yazı yazmak istendiği zaman bütün bloku seçiyor.
 
 Yapılanlar:
 S.1) Post edit kısmını çalıştır.
@@ -29,4 +30,11 @@ S.7) Editor içinde image eklemeye yap
     ... serverdaki mutation ve resolver işlemleri yapıldı.
 S.8) Daha sonra image la birlikte create, change ve display özelliklerini tamamla.
 S.9) Editor de yer alan <p>, <code> vs. elementlerin material ui Typograhpy componentı ile değiştir.
-C.9) Sorun Typograhpy style kısmına 
+  C.9) Sorun Typograhpy style kısmına 
+S.10) Aşağıdaki maddeyi çözebilmek için app seviyesinde bir değişken tutma ihtiyacı var. Çünkü componentler yıkıla yıkıla geldiğinden dolayı
+  ... bunun bir şekilde en yukarıdan default ile verilerek çekilmesi gerekmektedir. Bunun sorunun asıl çıkış nedeni aşağıdaki süreç isteği.
+      ... Hesaptan yayımdaki makaleleri gösterdikten sonra tekrar o tabda kalmalı.
+  C.10) Yukarıdaki ki sorun aynı şekilde yani local state kullanılarak çözüldü. Bunun için uygulama seviyesinde bir local state apollo-link-state
+  ... kullanılarak çözüldü. 
+S.11) Editorde yer alan hyperlink componentını material ui Link component ile değiştir.
+  C.12) Materialui deki <Link /> componenti kullanılarak çözüldü.

@@ -1,22 +1,12 @@
 import React, { Component } from "react";
 import { Editor, getEventRange, getEventTransfer } from "slate-react";
 import { Block } from "slate";
-import { Button, Toolbar, Typography } from "@material-ui/core";
+import { Button, Toolbar, Typography, Link } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import isUrl from "is-url";
 import ImageExtensions from "image-extensions";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
-
-// const existingValue = JSON.parse(localStorage.getItem("content"));
-
-// const plugins = [
-//   MarkHotKey({ key: "b", type: "bold" }),
-//   MarkHotKey({ key: "ö", type: "code" }),
-//   MarkHotKey({ key: "i", type: "italic" }),
-//   MarkHotKey({ key: "~", type: "strikethrough" }),
-//   MarkHotKey({ key: "u", type: "underline" })
-// ];
 
 const CREATE_POST_IMAGE = gql`
   mutation CreatePostImage($picture: Upload!) {
@@ -176,18 +166,23 @@ class TextEditor extends Component {
       case "link": {
         const { data } = node;
         const href = data.get("href");
+        console.log(href);
 
         return (
-          <Typography
-            {...attributes}
-            href={href}
-            component="a"
-            inline
-            cursor="pointer"
-            target="_blank"
-          >
+          <Link href={href} {...attributes} inline target="_blank">
             {children}
-          </Typography>
+          </Link>
+
+          // <Typography
+          //   {...attributes}
+          //   href={href}
+          //   component="a"
+          //   inline
+          //   cursor="pointer"
+          //   target="_blank"
+          // >
+          //   {children}
+          // </Typography>
         );
       }
       default: {

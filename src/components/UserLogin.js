@@ -17,7 +17,10 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { AUTH_TOKEN } from "../constants";
+import { AUTH_TOKEN, APP_SECRET } from "../constants";
+import { withApollo } from "react-apollo";
+import jwt from "jsonwebtoken";
+import { _TAKE_USER_ID } from "./MainLayout";
 
 const styles = theme => ({
   rootContainer: {
@@ -88,14 +91,18 @@ class UserLogin extends Component {
     this.setState(state => ({ login: !state.login }));
   };
 
-  _confirm = async data => {
+  _confirm = data => {
     const { token } = this.state.login ? data.loginUser : data.createUser;
-    const userId = this.state.login
-      ? data.loginUser.user.id
-      : data.createUser.user.id;
-
     this._saveUserData(token);
-    this.props.history.push(`/user/${userId}`);
+
+    const { userId } = token ? jwt.verify(token, APP_SECRET) : "";
+
+    this.props.client.writeQuery({
+      query: _TAKE_USER_ID,
+      data: { userLogin: { userId, __typename: "UserLogin" } }
+    });
+
+    this.props.history.push("/");
   };
 
   _saveUserData = token => {
@@ -254,4 +261,4 @@ class UserLogin extends Component {
   }
 }
 
-export default withStyles(styles)(UserLogin);
+export default withStyles(styles)(withApollo(UserLogin));

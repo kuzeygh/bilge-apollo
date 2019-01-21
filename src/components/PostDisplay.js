@@ -52,6 +52,13 @@ const styles = theme => ({
 });
 
 class PostDisplay extends Component {
+  componentDidMount() {
+    // 1. Burada ilk olarak user id lokalden çekmeliyiz.
+    // 2. Daha sonra bu id den kullanıcın postlarına ulaşmalıyız.
+    // 3. Son olarakta bu işlemden sonra params.id 'ye göre ilgili postu
+    // ... çekmeliyiz.
+  }
+
   render() {
     const postId = this.props.match.params.id;
     const { classes } = this.props;

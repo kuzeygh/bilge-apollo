@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { AUTH_TOKEN, APP_SECRET } from "../constants";
-import jwt from "jsonwebtoken";
 import UserDisplay from "./UserDisplay";
 import { withApollo } from "react-apollo";
+import { _TAKE_USER_ID } from "./MainLayout";
 
 export const TAKE_USER = gql`
   query TakeUser($userId: ID!) {
@@ -27,14 +26,17 @@ export const TAKE_USER = gql`
 
 class UserDisplayQuery extends Component {
   render() {
-    const authToken = localStorage.getItem(AUTH_TOKEN);
-    const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
+    const { userLogin } = this.props.client.readQuery({
+      query: _TAKE_USER_ID
+    });
+    const { userId } = userLogin;
 
     return (
       <Query query={TAKE_USER} variables={{ userId }}>
         {({ loading, error, data }) => {
           if (loading) return <div>Loading...</div>;
           if (error) return <div>Error...</div>;
+
           const user = data.userById;
           const { posts } = data.userById;
           const { tabIndex } = data.userById.tabStatus;

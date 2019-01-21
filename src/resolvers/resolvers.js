@@ -12,6 +12,18 @@ const resolvers = {
 
       return data;
     }
+    // writeUserId: (_, args, { cache }) => {
+    //   const data = {
+    //     userId: {
+    //       userId: args.userId,
+    //       __typename: "UserId"
+    //     }
+    //   };
+
+    //   cache.writeData({ data });
+
+    //   return data;
+    // }
   }
 };
 

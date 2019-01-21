@@ -1,12 +1,19 @@
 
 Öncelikli Yapılacaklar:
-
-2) PostDetail basıldığı zaman tekrar query çekmemize gerek yok bunun için lokal state management kullanılmalı
-3) UserDisplay componentından yayımla veya postun kendisi sorgulanmak istenirse cachedeki veriyi kullan.
-4) Text editor içindeki mutate ve query aynı anda yapılan işlem client.mutate fonksiyonunun refetchQueries opsiyonunu kullan.
-5) UserDisplay ekranından f5 yapınca hata alınıyor.
-6) TextEditorun user interfacedinde butonları material ui de kullanılan button grubun içine al ve ek olarak user interfacedinde
+Ö.1) UserLogin yapıldıktan sonra user ekranına geçerken verileri alıyoruz. 
+1) PostDetail basıldığı zaman tekrar query çekmemize gerek yok bunun için lokal state management kullanılmalı
+2) UserDisplay componentından yayımla veya postun kendisi sorgulanmak istenirse cachedeki veriyi kullan.
+3) Text editor içindeki mutate ve query aynı anda yapılan işlem client.mutate fonksiyonunun refetchQueries opsiyonunu kullan.
+4) UserDisplay ekranından f5 yapınca hata alınıyor.
+5) TextEditorun user interfacedinde butonları material ui de kullanılan button grubun içine al ve ek olarak user interfacedinde
   ... biraz değişiklik yap.
+6) Userid lokalde tutulabilir. Bu şekilde her zaman jsonwebtoken kullanılmakte kurtulabilir. Bu konuda apollo locak state tutorialinde
+  ... örnek vardı oradan yararlabilirsin.
+7) Kullanıcı girişinde hatalı bir giriş olduğu zaman bunu kullanıcıya nasıl yansıtacağız.
+8) MainLayouttan YazBoz u kaldır bu çünkü resimler için yapılmıştı.
+
+
+
 
 
 

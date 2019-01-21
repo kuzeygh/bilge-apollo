@@ -2,17 +2,23 @@ import React, { Component } from "react";
 import UserDisplayQuery from "./UserDisplayQuery";
 import UserLogin from "./UserLogin";
 import PostCreate from "./PostCreate";
-import PostCreateWithImage from "./PostCreateWithImage";
 import PostDisplay from "./PostDisplay";
 import PostEdit from "./PostEdit";
-import { AUTH_TOKEN, APP_SECRET } from "../constants";
 
+import gql from "graphql-tag";
+import { withApollo } from "react-apollo";
 import { withStyles } from "@material-ui/core/styles";
-import { Link, Switch, withRouter, Route } from "react-router-dom";
-import { Grid, MenuList, MenuItem, ListItemText } from "@material-ui/core";
-import jwt from "jsonwebtoken";
+import { Switch, Route } from "react-router-dom";
+import { Grid } from "@material-ui/core";
+import MainLinks from "./MainLinks";
 
-/////Styles Başlangıcı////
+export const _TAKE_USER_ID = gql`
+  query _TakeUserId @client {
+    userLogin {
+      userId
+    }
+  }
+`;
 
 const styles = theme => ({
   root: {
@@ -36,44 +42,18 @@ const styles = theme => ({
 class MainLayout extends Component {
   render() {
     const { classes } = this.props;
-    const authToken = localStorage.getItem(AUTH_TOKEN);
 
-    const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
+    const { userLogin } = this.props.client.readQuery({
+      query: _TAKE_USER_ID
+    });
+
+    const { userId } = userLogin;
+
     return (
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={2}>
-            <MenuList className={classes.menuList}>
-              {authToken && (
-                <MenuItem component={Link} to="/postcreate">
-                  <ListItemText primary="Makale Yaz" />
-                </MenuItem>
-              )}
-              {authToken && (
-                <MenuItem component={Link} to={`/user/${userId}`}>
-                  <ListItemText primary="Hesap" />
-                </MenuItem>
-              )}
-              {!authToken && (
-                <MenuItem component={Link} to="/userlogin">
-                  <ListItemText primary="Giriş" />
-                </MenuItem>
-              )}
-
-              {authToken && (
-                <MenuItem
-                  onClick={() => {
-                    localStorage.removeItem(AUTH_TOKEN);
-                    this.props.history.push("/");
-                  }}
-                >
-                  <ListItemText primary="Çıkış" />
-                </MenuItem>
-              )}
-              <MenuItem component={Link} to="/yazboz">
-                <ListItemText primary="Yaz Boz" />
-              </MenuItem>
-            </MenuList>
+            <MainLinks userId={userId} />
           </Grid>
 
           <Grid item xs={10} className={classes.gridRight}>
@@ -83,7 +63,6 @@ class MainLayout extends Component {
               <Route exact path="/userlogin" component={UserLogin} />
               <Route exact path={`/post/:id`} component={PostDisplay} />
               <Route path={`/post/edit/:id`} component={PostEdit} />
-              <Route exact path="/yazboz" component={PostCreateWithImage} />
             </Switch>
           </Grid>
         </Grid>
@@ -92,4 +71,4 @@ class MainLayout extends Component {
   }
 }
 
-export default withStyles(styles)(withRouter(MainLayout));
+export default withStyles(styles)(withApollo(MainLayout));

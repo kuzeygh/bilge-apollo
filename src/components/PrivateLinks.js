@@ -5,19 +5,26 @@ import { AUTH_TOKEN } from "../constants";
 import { withApollo } from "react-apollo";
 import { _TAKE_USER_ID } from "./MainLayout";
 
-const PrivateLinks = ({ history, userId, client }) => (
+const PrivateLinks = ({ history, userLogin, client }) => (
   <React.Fragment>
     <MenuItem component={Link} to="/postcreate">
       <ListItemText primary="Makale Yaz" />
     </MenuItem>
-    <MenuItem component={Link} to={`/user/${userId}`}>
+    <MenuItem component={Link} to={`/user/${userLogin.userId}`}>
       <ListItemText primary="Hesap" />
     </MenuItem>
     <MenuItem
       onClick={() => {
         client.writeQuery({
           query: _TAKE_USER_ID,
-          data: { userLogin: { userId: null, __typename: "UserLogin" } }
+          data: {
+            userLogin: {
+              userId: null,
+              name: null,
+              email: null,
+              __typename: "UserLogin"
+            }
+          }
         });
         localStorage.removeItem(AUTH_TOKEN);
 

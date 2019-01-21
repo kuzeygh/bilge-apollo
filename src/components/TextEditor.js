@@ -172,17 +172,6 @@ class TextEditor extends Component {
           <Link href={href} {...attributes} inline target="_blank">
             {children}
           </Link>
-
-          // <Typography
-          //   {...attributes}
-          //   href={href}
-          //   component="a"
-          //   inline
-          //   cursor="pointer"
-          //   target="_blank"
-          // >
-          //   {children}
-          // </Typography>
         );
       }
       default: {

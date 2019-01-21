@@ -16,6 +16,8 @@ export const _TAKE_USER_ID = gql`
   query _TakeUserId @client {
     userLogin {
       userId
+      name
+      email
     }
   }
 `;
@@ -47,13 +49,11 @@ class MainLayout extends Component {
       query: _TAKE_USER_ID
     });
 
-    const { userId } = userLogin;
-
     return (
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={2}>
-            <MainLinks userId={userId} />
+            <MainLinks userLogin={userLogin} />
           </Grid>
 
           <Grid item xs={10} className={classes.gridRight}>

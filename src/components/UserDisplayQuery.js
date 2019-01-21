@@ -37,11 +37,12 @@ class UserDisplayQuery extends Component {
           if (loading) return <div>Loading...</div>;
           if (error) return <div>Error...</div>;
 
-          const user = data.userById;
           const { posts } = data.userById;
           const { tabIndex } = data.userById.tabStatus;
 
-          return <UserDisplay user={user} posts={posts} tabIndex={tabIndex} />;
+          return (
+            <UserDisplay user={userLogin} posts={posts} tabIndex={tabIndex} />
+          );
         }}
       </Query>
     );

@@ -12,11 +12,15 @@ const styles = theme => ({
   }
 });
 
-const MainLinks = ({ classes, userId, history }) => {
+const MainLinks = ({ classes, userLogin }) => {
   return (
     <React.Fragment>
       <MenuList className={classes.menuList}>
-        {userId ? <PrivateLinks userId={userId} /> : <PublicLinks />}
+        {userLogin.userId ? (
+          <PrivateLinks userLogin={userLogin} />
+        ) : (
+          <PublicLinks />
+        )}
       </MenuList>
     </React.Fragment>
   );

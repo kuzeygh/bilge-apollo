@@ -95,11 +95,11 @@ class UserLogin extends Component {
     const { token } = this.state.login ? data.loginUser : data.createUser;
     this._saveUserData(token);
 
-    const { userId } = token ? jwt.verify(token, APP_SECRET) : "";
+    const { userId, name, email } = token ? jwt.verify(token, APP_SECRET) : "";
 
     this.props.client.writeQuery({
       query: _TAKE_USER_ID,
-      data: { userLogin: { userId, __typename: "UserLogin" } }
+      data: { userLogin: { userId, name, email, __typename: "UserLogin" } }
     });
 
     this.props.history.push("/");

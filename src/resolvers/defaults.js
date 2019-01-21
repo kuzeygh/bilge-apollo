@@ -2,7 +2,9 @@ import jwt from "jsonwebtoken";
 import { AUTH_TOKEN, APP_SECRET } from "../constants";
 
 const authToken = localStorage.getItem(AUTH_TOKEN);
-const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
+const { userId, name, email } = authToken
+  ? jwt.verify(authToken, APP_SECRET)
+  : "";
 
 const defaults = {
   tabStatus: {
@@ -11,7 +13,9 @@ const defaults = {
   },
   userLogin: {
     __typename: "UserLogin",
-    userId: userId || null
+    userId: userId || null,
+    name: name || null,
+    email: email || null
   }
 };
 

@@ -81,7 +81,7 @@ class PostEdit extends Component {
     const { title, firstQuery } = this.state;
     let { content } = this.state;
     const contentJson = JSON.stringify(content);
-    console.log(firstQuery, postId);
+
     return (
       <Paper className={classes.root}>
         {!firstQuery && (

@@ -1,5 +1,3 @@
-import gql from "graphql-tag";
-
 const resolvers = {
   Mutation: {
     updateTabIndex: (_, args, { cache }) => {

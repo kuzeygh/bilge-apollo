@@ -43,15 +43,15 @@ class UserDisplay extends Component {
     index: this.props.tabIndex
   };
 
-  handleChangeIndex = async ({ index }) => {
-    console.log(2);
-
-    this.setState({ index });
-  };
-
   handleTabChange = async (event, value) => {
     const tabIndex = value;
+    this.setState({ index: tabIndex });
+  };
 
+  // Component dağıtılmadan önce
+  // local state yi güncelliyoruz.
+  componentWillUnmount = async () => {
+    const tabIndex = this.state.index;
     const { data } = await this.props.client.mutate({
       mutation: UPDATE_TAB_INDEX,
       variables: { tabIndex }
@@ -69,8 +69,6 @@ class UserDisplay extends Component {
       variables: { userId: this.props.user.id },
       data: { userById }
     });
-
-    this.setState({ index: tabIndex });
   };
 
   render() {

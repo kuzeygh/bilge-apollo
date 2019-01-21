@@ -52,27 +52,32 @@ class UserDisplay extends Component {
   // local state yi güncelliyoruz.
   componentWillUnmount = async () => {
     const tabIndex = this.state.index;
-    const { data } = await this.props.client.mutate({
+    const tabIndexData = await this.props.client.mutate({
       mutation: UPDATE_TAB_INDEX,
       variables: { tabIndex }
     });
 
-    const { userById } = await this.props.client.readQuery({
+    const { userId } = this.props.userLogin;
+
+    const queryData = await this.props.client.readQuery({
       query: TAKE_USER,
-      variables: { userId: this.props.user.id }
+      variables: { userId }
     });
 
-    userById.tabStatus = data.updateTabIndex.tabStatus;
+    console.log(queryData);
+
+    queryData.userPostsById.tabStatus =
+      tabIndexData.data.updateTabIndex.tabStatus;
 
     this.props.client.writeQuery({
       query: TAKE_USER,
-      variables: { userId: this.props.user.id },
-      data: { userById }
+      variables: { userId },
+      data: queryData
     });
   };
 
   render() {
-    const { classes, theme, user, posts } = this.props;
+    const { classes, theme, userLogin, posts } = this.props;
 
     const { index } = this.state;
 
@@ -82,10 +87,10 @@ class UserDisplay extends Component {
       <div className={classes.root}>
         <div className={classes.headerContainer}>
           <Typography variant="h4" className={classes.textFields}>
-            {user.name}
+            {userLogin.name}
           </Typography>
           <Typography varint="h6" className={classes.textFields}>
-            {user.email}
+            {userLogin.email}
           </Typography>
         </div>
 
@@ -114,14 +119,22 @@ class UserDisplay extends Component {
               <TabContainer dir={theme.direction}>
                 <List component="nav">
                   {notPublishedPosts.map(post => (
-                    <PostListItem post={post} key={post.id} user={user} />
+                    <PostListItem
+                      post={post}
+                      key={post.id}
+                      userLogin={userLogin}
+                    />
                   ))}
                 </List>
               </TabContainer>
               <TabContainer dir={theme.direction}>
                 <List component="nav">
                   {publishedPosts.map(post => (
-                    <PostListItem post={post} key={post.id} user={user} />
+                    <PostListItem
+                      post={post}
+                      key={post.id}
+                      userLogin={userLogin}
+                    />
                   ))}
                 </List>
               </TabContainer>

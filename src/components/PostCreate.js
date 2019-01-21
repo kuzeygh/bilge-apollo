@@ -104,7 +104,7 @@ class PostCreate extends Component {
                   query: TAKE_USER,
                   variables: { userId }
                 });
-                data.userById.posts.unshift(createPost);
+                data.userPostsById.posts.unshift(createPost);
 
                 cache.writeQuery({
                   query: TAKE_USER,

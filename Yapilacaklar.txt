@@ -1,5 +1,6 @@
 
 Öncelikli Yapılacaklar:
+Ö.1) UserDisplay yapılırken kullanılan TAKE_USER 'da id, name, email 'leri userLogin cacheni kullanak çekebeliriz.
 1) PostDetail basıldığı zaman tekrar query çekmemize gerek yok bunun için lokal state management kullanılmalı
 2) UserDisplay componentından yayımla veya postun kendisi sorgulanmak istenirse cachedeki veriyi kullan.
 3) Text editor içindeki mutate ve query aynı anda yapılan işlem client.mutate fonksiyonunun refetchQueries opsiyonunu kullan.

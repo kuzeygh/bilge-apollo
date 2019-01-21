@@ -54,7 +54,7 @@ class PostListItemActions extends Component {
   render() {
     const { open } = this.state;
     const { postId } = this.props;
-    const userId = this.props.user.id;
+    const { userId } = this.props.userLogin;
     return (
       <React.Fragment>
         <IconButton
@@ -119,10 +119,10 @@ class PostListItemActions extends Component {
                           variables: { userId }
                         });
 
-                        const deletedData = data.userById.posts.filter(
+                        const deletedData = data.userPostsById.posts.filter(
                           post => post.id !== postId
                         );
-                        data.userById.posts = deletedData;
+                        data.userPostsById.posts = deletedData;
                         cache.writeQuery({
                           query: TAKE_USER,
                           data

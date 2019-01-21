@@ -27,7 +27,7 @@ const PostListItem = props => (
       </ListItem>
     </div>
     <div className={props.classes.buttonContainer}>
-      <PostListItemActions postId={props.post.id} user={props.user} />
+      <PostListItemActions postId={props.post.id} userLogin={props.userLogin} />
     </div>
   </div>
 );

@@ -1,10 +1,10 @@
 export function publishedPostData(data, postId) {
-  const posts = data.userById.posts;
+  const posts = data.userPostsById.posts;
   for (let i = 0; i < posts.length; i++) {
     if (posts[i].id === postId) {
       posts[i].published = true;
     }
   }
-  data.userById.posts = posts;
+  data.userPostsById.posts = posts;
   return data;
 }

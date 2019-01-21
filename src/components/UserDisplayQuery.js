@@ -7,10 +7,7 @@ import { _TAKE_USER_ID } from "./MainLayout";
 
 export const TAKE_USER = gql`
   query TakeUser($userId: ID!) {
-    userById(userId: $userId) {
-      id
-      name
-      email
+    userPostsById(userId: $userId) {
       posts {
         id
         title
@@ -37,11 +34,15 @@ class UserDisplayQuery extends Component {
           if (loading) return <div>Loading...</div>;
           if (error) return <div>Error...</div>;
 
-          const { posts } = data.userById;
-          const { tabIndex } = data.userById.tabStatus;
+          const { posts } = data.userPostsById;
+          const { tabIndex } = data.userPostsById.tabStatus;
 
           return (
-            <UserDisplay user={userLogin} posts={posts} tabIndex={tabIndex} />
+            <UserDisplay
+              userLogin={userLogin}
+              posts={posts}
+              tabIndex={tabIndex}
+            />
           );
         }}
       </Query>

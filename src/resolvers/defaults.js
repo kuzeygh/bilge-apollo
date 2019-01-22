@@ -7,6 +7,9 @@ const { userId, name, email } = authToken
   : "";
 
 const defaults = {
+  mutate: {
+    errorPolicy: "all"
+  },
   tabStatus: {
     __typename: "TabStatus",
     tabIndex: 0

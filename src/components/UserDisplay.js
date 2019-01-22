@@ -6,6 +6,7 @@ import { Typography, List, AppBar, Tabs, Tab } from "@material-ui/core";
 import PostListItem from "./PostListItem";
 import SwipeableViews from "react-swipeable-views";
 import { TAKE_USER } from "./UserDisplayQuery";
+import UserNavigationButtons from "./UserNavigationButtons";
 
 const styles = theme => ({
   root: {
@@ -46,6 +47,10 @@ class UserDisplay extends Component {
   handleTabChange = async (event, value) => {
     const tabIndex = value;
     this.setState({ index: tabIndex });
+  };
+
+  handleChangeIndex = index => {
+    this.setState({ value: index });
   };
 
   // Component dağıtılmadan önce
@@ -114,8 +119,8 @@ class UserDisplay extends Component {
               index={index}
               onChangeIndex={this.handleChangeIndex}
             >
-              <TabContainer dir={theme.direction}>
-                <List component="nav">
+              <NotPublishTabContainer dir={theme.direction}>
+                <List key="published">
                   {notPublishedPosts.map(post => (
                     <PostListItem
                       post={post}
@@ -124,9 +129,9 @@ class UserDisplay extends Component {
                     />
                   ))}
                 </List>
-              </TabContainer>
-              <TabContainer dir={theme.direction}>
-                <List component="nav">
+              </NotPublishTabContainer>
+              <PublishTabContainer dir={theme.direction}>
+                <List key="not-published">
                   {publishedPosts.map(post => (
                     <PostListItem
                       post={post}
@@ -135,16 +140,25 @@ class UserDisplay extends Component {
                     />
                   ))}
                 </List>
-              </TabContainer>
+              </PublishTabContainer>
             </SwipeableViews>
           </div>
         </div>
+        <UserNavigationButtons />
       </div>
     );
   }
 }
 
-function TabContainer({ children, dir }) {
+function NotPublishTabContainer({ children, dir }) {
+  return (
+    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+      {children}
+    </Typography>
+  );
+}
+
+function PublishTabContainer({ children, dir }) {
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
       {children}

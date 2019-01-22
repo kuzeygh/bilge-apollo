@@ -1,27 +1,23 @@
 
 Öncelikli Yapılacaklar:
-
-1) TextEditorun user interfacedinde butonları material ui de kullanılan button grubun içine al ve ek olarak user interfacedinde
-  ... biraz değişiklik yap. 
-2) Userid lokalde tutulabilir. Bu şekilde her zaman jsonwebtoken kullanılmakte kurtulabilir. Bu konuda apollo locak state tutorialinde
-  ... örnek vardı oradan yararlabilirsin.
-3) Kullanıcı girişinde hatalı bir giriş olduğu zaman bunu kullanıcıya nasıl yansıtacağız.
-4) MainLayouttan YazBoz u kaldır bu çünkü resimler için yapılmıştı.
-5) PostEdit kısmında authToken kullanılmış, bu veriyi lokaldeki userLogin querysinden alabiliriz.
-6) Taslaklar ve Yayınlar arasında değişiklik yapılırken hangisi daha fazla ise beyaz alan o kadar büyüyor. Bu alanın sadece kendi listesi
+1) Taslaklar ve Yayınlar arasında değişiklik yapılırken hangisi daha fazla ise beyaz alan o kadar büyüyor. Bu alanın sadece kendi listesi
   ... kadar büyümesi lazım.
-7) Taslaklardaki yayımla çalışmıyor ayrıca yayımlardaki Yayımlayı kaldır. 
-8) Butonlardan altı çizgili yazı yazmak istendiği zaman bütün bloku seçiyor.
-9) Bir makale yayımlanırsa taslaklar sekmesinden yayınlar sekmesine geçiş yapmayı dene.
-10) Editorde yazı yazarken toolbar olarak hangi eleman kullanılırsa onu renkli veya karşıt renkler kullanılarak göstermek gerekiyor.
-11) Herhangi bir component oluşturulmadan önce bir animasyon ekleme işi yap. Bunun için kalın, italic gibi işlemler yapılınca render 
+2) Taslaklardaki yayımla çalışmıyor ayrıca yayımlardaki Yayımlayı kaldır. 
+3) Butonlardan altı çizgili yazı yazmak istendiği zaman bütün bloku seçiyor.
+4) Bir makale yayımlanırsa taslaklar sekmesinden yayınlar sekmesine geçiş yapmayı dene.
+5) Editorde yazı yazarken toolbar olarak hangi eleman kullanılırsa onu renkli veya karşıt renkler kullanılarak göstermek gerekiyor.
+6) Herhangi bir component oluşturulmadan önce bir animasyon ekleme işi yap. Bunun için kalın, italic gibi işlemler yapılınca render 
   ... edilen Typograhpy componentlerından önce yapabiliriz.
+7) Makalelerin altına Teşekkür et butonu koy bunu websocketlerle birlikte kullan yani dinamik olarak gösterilsin. 
+8) Her bir makalenin altına yorum özelliği getir.
+9) Kullanıcının profilinde değişiklik yapabilmesine izin vermek için hesap componenti yap ayrıca bu componenta avatar resim ekleme özelliği olsun.
 
 
 
 
 Düşük öncelikli yapılacaklar.
 1) Editor edit veya create halindeyken hyperlink ler için preview özelliği ekle.
+2) Avatar vs resimleri işlemek için bir teknoloji var mı ona bak.
 
  
 
@@ -62,3 +58,5 @@ S.16) UserDisplay ekranından f5 yapınca hata alınıyor.
 S.17) TextEditorun user interfacedinde butonları material ui de kullanılan button grubun içine al ve ek olarak user interfacedinde
   ... biraz değişiklik yap. 
 C.17) Geliştirme font-awesome fontları kullanılark çözüldü. Ayrıca bu işleminden sonrada Toolbar adında yeni bir component oluşturuldu.
+S.18) Kullanıcı girişinde hatalı bir giriş olduğu zaman bunu kullanıcıya nasıl yansıtacağız.
+  C.17) Detaylı bir error handling yapılmadı sadece kullanıcı girdiği zaman mutate onError'dan hatayı yakaladık daha sonra state'de gösterdik.

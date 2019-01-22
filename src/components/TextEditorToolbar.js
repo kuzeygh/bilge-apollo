@@ -9,7 +9,9 @@ const styles = theme => ({
     justifyContent: "center"
   },
   icon: {
-    margin: theme.spacing.unit * 2
+    margin: theme.spacing.unit * 2,
+    backgroundColor: "#009688",
+    color: "white"
   }
 });
 

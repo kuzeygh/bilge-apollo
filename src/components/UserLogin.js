@@ -76,7 +76,8 @@ class UserLogin extends Component {
     password1: "",
     password2: "",
     showPassword: false,
-    login: true
+    login: true,
+    error: false
   };
 
   handleChange = prop => event => {
@@ -117,7 +118,8 @@ class UserLogin extends Component {
       password1,
       password2,
       showPassword,
-      login
+      login,
+      error
     } = this.state;
 
     const password = password1;
@@ -229,12 +231,18 @@ class UserLogin extends Component {
               />
             )}
           </div>
+          {
+            ////// Hatanın Verildiği kısım /////
+            //--------------------------------//
+          }
+          <div>{error ? "Kullanıcı adı veya şifre hatalı" : null}</div>
 
           <div className={classes.buttonContainer}>
             <Mutation
               mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
               variables={{ email, name, password }}
               onCompleted={data => this._confirm(data)}
+              onError={() => this.setState({ error: true })}
             >
               {signupOrLogin => (
                 <Button

@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import TextEditor from "./TextEditor";
 import { Value } from "slate";
 import { _TAKE_USER_ID } from "./MainLayout";
+import { withRouter } from "react-router-dom";
 
 const UPDATE_POST = gql`
   mutation UpdatePost($postId: ID!, $title: String!, $contentJson: String!) {
@@ -62,8 +63,7 @@ class PostEdit extends Component {
   };
 
   render() {
-    console.log(this.props);
-    const { classes, post } = this.props;
+    const { classes, post, history } = this.props;
     const postId = post.id;
 
     const { title, userId } = this.state;
@@ -110,7 +110,7 @@ class PostEdit extends Component {
             mutation={UPDATE_POST}
             variables={{ postId, title, contentJson }}
             onCompleted={() => {
-              this.props.history.push(`/user/${userId}`);
+              history.push(`/user/${userId}`);
             }}
           >
             {updatePostMutation => (
@@ -130,4 +130,4 @@ class PostEdit extends Component {
   }
 }
 
-export default withStyles(styles)(withApollo(PostEdit));
+export default withStyles(styles)(withApollo(withRouter(PostEdit)));

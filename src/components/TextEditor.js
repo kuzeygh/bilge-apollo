@@ -232,6 +232,10 @@ class TextEditor extends Component {
         const [mime] = file.type.split("/");
         if (mime !== "image") continue;
 
+        /* 
+          RESİM YÜKLE VE AL
+        */
+
         this.props.client
           .mutate({
             mutation: CREATE_POST_IMAGE,

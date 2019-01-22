@@ -6,9 +6,10 @@ import PrivateLinks from "./PrivateLinks.js";
 
 const styles = theme => ({
   menuList: {
-    backgroundColor: "#acacac",
+    backgroundColor: "#eceff1",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    borderRadius: "0.5rem"
   }
 });
 

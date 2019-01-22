@@ -30,6 +30,10 @@ const styles = theme => ({
     height: "150vh",
     backgroundColor: "#cfd8dc"
   },
+  gridLeft: {
+    padding: "1rem",
+    borderRadius: "0.5rem"
+  },
   gridRight: {
     padding: "3rem"
   },
@@ -53,7 +57,7 @@ class MainLayout extends Component {
     return (
       <div className={classes.root}>
         <Grid container>
-          <Grid item xs={2}>
+          <Grid item xs={2} className={classes.gridLeft}>
             <MainLinks userLogin={userLogin} />
           </Grid>
 

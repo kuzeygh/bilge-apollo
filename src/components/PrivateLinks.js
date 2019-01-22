@@ -4,13 +4,24 @@ import { Link, withRouter } from "react-router-dom";
 import { AUTH_TOKEN } from "../constants";
 import { withApollo } from "react-apollo";
 import { _TAKE_USER_ID } from "./MainLayout";
+import { withStyles } from "@material-ui/core/styles";
 
-const PrivateLinks = ({ history, userLogin, client }) => (
+const styles = theme => ({
+  menuLinks: {
+    borderBottom: "1px solid #cfd8dc"
+  }
+});
+
+const PrivateLinks = ({ history, userLogin, client, classes }) => (
   <React.Fragment>
-    <MenuItem component={Link} to="/postcreate">
+    <MenuItem component={Link} to="/postcreate" className={classes.menuLinks}>
       <ListItemText primary="Makale Yaz" />
     </MenuItem>
-    <MenuItem component={Link} to={`/user/${userLogin.userId}`}>
+    <MenuItem
+      component={Link}
+      to={`/user/${userLogin.userId}`}
+      className={classes.menuLinks}
+    >
       <ListItemText primary="Hesap" />
     </MenuItem>
     <MenuItem
@@ -30,10 +41,11 @@ const PrivateLinks = ({ history, userLogin, client }) => (
 
         history.push("/");
       }}
+      className={classes.menuLinks}
     >
       <ListItemText primary="Çıkış" />
     </MenuItem>
   </React.Fragment>
 );
 
-export default withRouter(withApollo(PrivateLinks));
+export default withStyles(styles)(withRouter(withApollo(PrivateLinks)));

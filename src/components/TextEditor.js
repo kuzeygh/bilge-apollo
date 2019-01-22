@@ -8,6 +8,7 @@ import ImageExtensions from "image-extensions";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import TextEditorToolbar from "./TextEditorToolbar";
+import { loadCSS } from "fg-loadcss/src/loadCSS";
 
 const CREATE_POST_IMAGE = gql`
   mutation CreatePostImage($picture: Upload!) {
@@ -91,6 +92,14 @@ const styles = theme => ({
 });
 
 class TextEditor extends Component {
+  // Font-Awesom Yükleme işlemi
+  componentDidMount() {
+    loadCSS(
+      "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
+      document.querySelector("#insertion-point-jss")
+    );
+  }
+
   MarkHotKey(event, options) {
     event.preventDefault();
     const { type } = options;
@@ -151,10 +160,12 @@ class TextEditor extends Component {
             src={src}
             component="img"
             style={{
+              marginTop: "10px",
+              marginBottom: "10px",
               marginLeft: "auto",
               marginRight: "auto",
-              width: "50%",
-              height: "50%",
+              width: "30%",
+              height: "30%",
               textAlign: "center",
               display: "block",
               borderRadius: "0.5rem"

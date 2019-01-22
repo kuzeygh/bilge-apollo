@@ -1,65 +1,67 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Button, Toolbar } from "@material-ui/core";
+import { Toolbar, Icon, Fab } from "@material-ui/core";
+import classNames from "classnames";
 
 const styles = theme => ({
-  editorButtons: {
-    marginRight: "10px"
+  container: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  icon: {
+    margin: theme.spacing.unit * 2
   }
 });
 
 const TextEditorToolbar = ({ onClick, onClickLink, onClickImage, classes }) => (
-  <Toolbar>
-    <Button
-      variant="contained"
-      className={classes.editorButtons}
+  <Toolbar className={classes.container}>
+    <Fab
       onClick={event => onClick(event, { type: "bold" })}
-      // onClick={event => this.MarkHotKey(event, { type: "bold" })}
+      size="medium"
+      className={classes.icon}
     >
-      Kalın
-    </Button>
+      <Icon className={classNames("fas fa-bold")} />
+    </Fab>
 
-    <Button
-      variant="contained"
-      className={classes.editorButtons}
+    <Fab
       onClick={event => onClick(event, { type: "italic" })}
-      // onClick={event => this.MarkHotKey(event, { type: "italic" })}
+      size="medium"
+      className={classes.icon}
     >
-      İtalic
-    </Button>
-    <Button
-      variant="contained"
-      className={classes.editorButtons}
+      <Icon className={classNames("fas fa-italic")} />
+    </Fab>
+
+    <Fab
       onClick={event => onClick(event, { type: "strikethrough" })}
-      // onClick={event =>
-      //   this.MarkHotKey(event, { type: "strikethrough" })
-      // }
+      size="medium"
+      className={classes.icon}
     >
-      Üstü Çizili
-    </Button>
-    <Button
-      variant="contained"
-      className={classes.editorButtons}
+      <Icon className={classNames("fas fa-strikethrough")} />
+    </Fab>
+
+    <Fab
       onClick={event => onClick(event, { type: "underline" })}
-      // onClick={event => this.MarkHotKey(event, { type: "underline" })}
+      size="medium"
+      className={classes.icon}
     >
-      Alt Yazılı
-    </Button>
-    <Button
-      variant="contained"
-      className={classes.editorButtons}
+      <Icon className={classNames("fas fa-underline")} />
+    </Fab>
+
+    <Fab
+      size="medium"
+      className={classes.icon}
       onMouseDown={event => onClickLink(event)}
-      // onMouseDown={this.onClickLink}
     >
-      Link
-    </Button>
-    <Button
-      variant="contained"
-      className={classes.editorButtons}
+      <Icon className={classNames("fas fa-link")} />
+    </Fab>
+
+    <Fab
+      size="medium"
+      className={classes.icon}
       onMouseDown={event => onClickImage(event)}
     >
-      Resim
-    </Button>
+      <Icon className={classNames("fas fa-images")} />
+    </Fab>
   </Toolbar>
 );
 

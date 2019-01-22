@@ -1,8 +1,8 @@
 
 Öncelikli Yapılacaklar:
-Ö.1) Kardeş öncelikle şu menüyü düzeltin bir allasen.
+
 1) TextEditorun user interfacedinde butonları material ui de kullanılan button grubun içine al ve ek olarak user interfacedinde
-  ... biraz değişiklik yap.
+  ... biraz değişiklik yap. 
 2) Userid lokalde tutulabilir. Bu şekilde her zaman jsonwebtoken kullanılmakte kurtulabilir. Bu konuda apollo locak state tutorialinde
   ... örnek vardı oradan yararlabilirsin.
 3) Kullanıcı girişinde hatalı bir giriş olduğu zaman bunu kullanıcıya nasıl yansıtacağız.
@@ -14,6 +14,8 @@
 8) Butonlardan altı çizgili yazı yazmak istendiği zaman bütün bloku seçiyor.
 9) Bir makale yayımlanırsa taslaklar sekmesinden yayınlar sekmesine geçiş yapmayı dene.
 10) Editorde yazı yazarken toolbar olarak hangi eleman kullanılırsa onu renkli veya karşıt renkler kullanılarak göstermek gerekiyor.
+11) Herhangi bir component oluşturulmadan önce bir animasyon ekleme işi yap. Bunun için kalın, italic gibi işlemler yapılınca render 
+  ... edilen Typograhpy componentlerından önce yapabiliriz.
 
 
 
@@ -57,3 +59,6 @@ S.15) Text editor içindeki mutate ve query aynı anda yapılan işlem client.mu
   C.15) Buradaki refetch 'den kasıt aynı mutation yapmış olduğumuz dosyayı değil başka queryleri alabilmek için kullanılıyor.
 S.16) UserDisplay ekranından f5 yapınca hata alınıyor.
   C.16) Sorun giderildi. UserDisplay ekranın önüne UserDisplayQuery componentı yerleştirilerek giderildi.
+S.17) TextEditorun user interfacedinde butonları material ui de kullanılan button grubun içine al ve ek olarak user interfacedinde
+  ... biraz değişiklik yap. 
+C.17) Geliştirme font-awesome fontları kullanılark çözüldü. Ayrıca bu işleminden sonrada Toolbar adında yeni bir component oluşturuldu.

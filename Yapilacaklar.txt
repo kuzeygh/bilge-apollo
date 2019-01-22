@@ -13,7 +13,7 @@
 7) Taslaklardaki yayımla çalışmıyor ayrıca yayımlardaki Yayımlayı kaldır. 
 8) Butonlardan altı çizgili yazı yazmak istendiği zaman bütün bloku seçiyor.
 9) Bir makale yayımlanırsa taslaklar sekmesinden yayınlar sekmesine geçiş yapmayı dene.
-
+10) Editorde yazı yazarken toolbar olarak hangi eleman kullanılırsa onu renkli veya karşıt renkler kullanılarak göstermek gerekiyor.
 
 
 

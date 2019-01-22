@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Editor, getEventRange, getEventTransfer } from "slate-react";
 import { Block } from "slate";
-import { Button, Toolbar, Typography, Link } from "@material-ui/core";
+import { Typography, Link } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import isUrl from "is-url";
 import ImageExtensions from "image-extensions";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
+import TextEditorToolbar from "./TextEditorToolbar";
 
 const CREATE_POST_IMAGE = gql`
   mutation CreatePostImage($picture: Upload!) {
@@ -83,9 +84,7 @@ const styles = theme => ({
     borderTop: "1px solid #ccc",
     padding: "10px"
   },
-  editorButtons: {
-    marginRight: "10px"
-  },
+
   boldFont: {
     fontWeight: "bold"
   }
@@ -283,53 +282,11 @@ class TextEditor extends Component {
     return (
       <div>
         {!this.props.display && (
-          <Toolbar>
-            <Button
-              variant="contained"
-              className={classes.editorButtons}
-              onClick={event => this.MarkHotKey(event, { type: "bold" })}
-            >
-              Kalın
-            </Button>
-
-            <Button
-              variant="contained"
-              className={classes.editorButtons}
-              onClick={event => this.MarkHotKey(event, { type: "italic" })}
-            >
-              İtalic
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.editorButtons}
-              onClick={event =>
-                this.MarkHotKey(event, { type: "strikethrough" })
-              }
-            >
-              Üstü Çizili
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.editorButtons}
-              onClick={event => this.MarkHotKey(event, { type: "underline" })}
-            >
-              Alt Yazılı
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.editorButtons}
-              onMouseDown={this.onClickLink}
-            >
-              Link
-            </Button>
-            <Button
-              variant="contained"
-              className={classes.editorButtons}
-              onMouseDown={this.onClickImage}
-            >
-              Resim
-            </Button>
-          </Toolbar>
+          <TextEditorToolbar
+            onClick={(event, { type }) => this.MarkHotKey(event, { type })}
+            onClickLink={event => this.onClickLink(event)}
+            onClickImage={event => this.onClickImage(event)}
+          />
         )}
 
         <div className={classes.editorContainer}>

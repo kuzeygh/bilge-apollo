@@ -64,8 +64,6 @@ class UserDisplay extends Component {
       variables: { userId }
     });
 
-    console.log(queryData);
-
     queryData.userPostsById.tabStatus =
       tabIndexData.data.updateTabIndex.tabStatus;
 

@@ -1,8 +1,7 @@
 
 Öncelikli Yapılacaklar:
-Ö.1) UserDisplay yapılırken kullanılan TAKE_USER 'da id, name, email 'leri userLogin cacheni kullanak çekebeliriz.
-1) PostDetail basıldığı zaman tekrar query çekmemize gerek yok bunun için lokal state management kullanılmalı
-2) UserDisplay componentından yayımla veya postun kendisi sorgulanmak istenirse cachedeki veriyi kullan.
+
+
 3) Text editor içindeki mutate ve query aynı anda yapılan işlem client.mutate fonksiyonunun refetchQueries opsiyonunu kullan.
 4) UserDisplay ekranından f5 yapınca hata alınıyor.
 5) TextEditorun user interfacedinde butonları material ui de kullanılan button grubun içine al ve ek olarak user interfacedinde
@@ -11,6 +10,10 @@
   ... örnek vardı oradan yararlabilirsin.
 7) Kullanıcı girişinde hatalı bir giriş olduğu zaman bunu kullanıcıya nasıl yansıtacağız.
 8) MainLayouttan YazBoz u kaldır bu çünkü resimler için yapılmıştı.
+9) PostEdit kısmında authToken kullanılmış, bu veriyi lokaldeki userLogin querysinden alabiliriz.
+10) Taslaklar ve Yayınlar arasında değişiklik yapılırken hangisi daha fazla ise beyaz alan o kadar büyüyor. Bu alanın sadece kendi listesi
+  ... kadar büyümesi lazım.
+11) Taslaklardaki yayımla çalışmıyor ayrıca yayımlardaki Yayımlayı kaldır. 
 
 
 
@@ -47,3 +50,7 @@ S.11) Editorde yer alan hyperlink componentını material ui Link component ile 
   C.12) Materialui deki <Link /> componenti kullanılarak çözüldü.
 S.12) UserLogin yapıldıktan sonra user ekranına geçerken verileri alıyoruz.
   C.12) Userlogin giriş yapıldıktan sonra menu local stateden alınan userId'ye göre rotalar render edildi.
+S.13) UserDisplay yapılırken kullanılan TAKE_USER 'da id, name, email 'leri userLogin cacheni kullanak çekebeliriz.
+  C.13) Server tarafında ve client tarafındaki userPostById querysi eklendi.
+S.14) PostDetail basıldığı zaman tekrar query çekmemize gerek yok bunun için lokal state management kullanılmalı
+  C.14) Sorun posts queryisinden fragment kullanılarak çözüldü.

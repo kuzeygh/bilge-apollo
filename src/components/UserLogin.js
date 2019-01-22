@@ -119,7 +119,9 @@ class UserLogin extends Component {
       showPassword,
       login
     } = this.state;
+
     const password = password1;
+    console.log(email, name, password);
     return (
       <div className={classes.rootContainer}>
         <Paper className={classes.root} spacing={1}>

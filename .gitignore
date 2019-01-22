@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /bilge-graphql
+.txt
 
 # testing
 /coverage

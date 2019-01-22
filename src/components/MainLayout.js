@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import UserDisplayQuery from "./UserDisplayQuery";
 import UserLogin from "./UserLogin";
 import PostCreate from "./PostCreate";
-import PostDisplay from "./PostDisplay";
-import PostEdit from "./PostEdit";
+import PostDisplayQuery from "./PostDisplayQuery";
+
+import TextEditorQuery from "./TextEditorQuery";
 
 import gql from "graphql-tag";
 import { withApollo } from "react-apollo";
@@ -61,8 +62,8 @@ class MainLayout extends Component {
               <Route exact path="/postcreate" component={PostCreate} />
               <Route path={`/user/:id`} component={UserDisplayQuery} />
               <Route exact path="/userlogin" component={UserLogin} />
-              <Route exact path={`/post/:id`} component={PostDisplay} />
-              <Route path={`/post/edit/:id`} component={PostEdit} />
+              <Route exact path={`/post/:id`} component={PostDisplayQuery} />
+              <Route path={`/post/edit/:id`} component={TextEditorQuery} />
             </Switch>
           </Grid>
         </Grid>

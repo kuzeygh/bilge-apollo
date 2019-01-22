@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import { withApollo } from "react-apollo";
-import gql from "graphql-tag";
-import PostEdit from "./PostEdit";
 import PostDisplayRequest from "./PostDisplayRequest";
+import PostDisplay from "./PostDisplay";
+import gql from "graphql-tag";
+import { withApollo } from "react-apollo";
 
-class TextEditorQuery extends Component {
+class PostDisplayQuery extends Component {
   render() {
     const { match, client } = this.props;
-    const postId = match.params.id;
 
     const post = client.readFragment({
-      id: postId,
+      id: match.params.id,
       fragment: gql`
         fragment MyPost on Post {
           id
@@ -23,10 +22,11 @@ class TextEditorQuery extends Component {
     });
 
     if (post) {
-      return <PostEdit post={post} firstQuery={true} />;
+      return <PostDisplay post={post} />;
     }
-    return <PostDisplayRequest display={false} />;
+
+    return <PostDisplayRequest display={true} />;
   }
 }
 
-export default withApollo(TextEditorQuery);
+export default withApollo(PostDisplayQuery);

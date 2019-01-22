@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { Mutation } from "react-apollo";
+import { Mutation, withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import { Button, Typography, TextField, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import TextEditor from "./TextEditor";
-import TextEditorQuery from "./TextEditorQuery";
 import { Value } from "slate";
-import { AUTH_TOKEN, APP_SECRET, initialValue } from "../constants";
-import jwt from "jsonwebtoken";
+import { _TAKE_USER_ID } from "./MainLayout";
 
 const UPDATE_POST = gql`
   mutation UpdatePost($postId: ID!, $title: String!, $contentJson: String!) {
@@ -49,48 +47,36 @@ const styles = theme => ({
 });
 
 class PostEdit extends Component {
-  state = {
-    title: "Yükleniyor",
-    content: initialValue,
-    firstQuery: false,
-    created: false
-  };
-
-  handleTextEditor = ({ value }) => {
-    this.setState({
-      content: value
+  componentDidMount() {
+    const { userLogin } = this.props.client.readQuery({
+      query: _TAKE_USER_ID
     });
-  };
-
-  afterQuery(data) {
-    let content = data.postById.content;
-    const post = data.postById;
-    const { title } = post;
-    content = JSON.parse(content);
-    content = Value.fromJSON(content);
-    this.setState({ content, title, firstQuery: true });
+    this.setState({ userId: userLogin.userId });
   }
 
+  state = {
+    title: this.props.post.title,
+    content: this.props.post.content,
+    created: false,
+    userId: null
+  };
+
   render() {
-    const { classes } = this.props;
+    console.log(this.props);
+    const { classes, post } = this.props;
+    const postId = post.id;
 
-    const authToken = localStorage.getItem(AUTH_TOKEN);
-    const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
-
-    const postId = this.props.match.params.id;
-    const { title, firstQuery } = this.state;
+    const { title, userId } = this.state;
     let { content } = this.state;
     const contentJson = JSON.stringify(content);
 
+    if (typeof content === "string") {
+      content = JSON.parse(content);
+      content = Value.fromJSON(content);
+    }
+
     return (
       <Paper className={classes.root}>
-        {!firstQuery && (
-          <TextEditorQuery
-            postId={postId}
-            onCompleted={data => this.afterQuery(data)}
-          />
-        )}
-
         <div>
           <Typography
             variant="h5"
@@ -116,7 +102,7 @@ class PostEdit extends Component {
         <div className={classes.contentContainer}>
           <TextEditor
             onChange={({ value }) => this.setState({ content: value })}
-            value={this.state.content}
+            value={content}
           />
         </div>
         <div className={classes.buttonContainer}>
@@ -144,4 +130,4 @@ class PostEdit extends Component {
   }
 }
 
-export default withStyles(styles)(PostEdit);
+export default withStyles(styles)(withApollo(PostEdit));

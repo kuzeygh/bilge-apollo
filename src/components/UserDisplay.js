@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Grow } from "@material-ui/core";
-// import gql from "graphql-tag";
 import { withApollo } from "react-apollo";
-// import { Typography } from "@material-ui/core";
 import UserPostList from "./UserPostList";
-// import { TAKE_USER } from "./UserDisplayQuery";
 import UserNavigationButtons from "./UserNavigationButtons";
 
 const styles = theme => ({
@@ -33,48 +30,15 @@ const styles = theme => ({
   }
 });
 
-// const UPDATE_TAB_INDEX = gql`
-//   mutation UpdateTabIndex($tabIndex: Int!) {
-//     updateTabIndex(tabIndex: $tabIndex) @client
-//   }
-// `;
-
 class UserDisplay extends Component {
   state = {
-    // index: this.props.tabIndex,
-    activeList: "",
+    activeList: "draft",
     draftFlag: false
   };
 
   onClickList = ({ type, draftFlag }) => {
     this.setState({ activeList: type, draftFlag });
   };
-
-  // Component dağıtılmadan önce
-  // local state yi güncelliyoruz.
-  // componentWillUnmount = async () => {
-  //   const tabIndex = this.state.index;
-  //   const tabIndexData = await this.props.client.mutate({
-  //     mutation: UPDATE_TAB_INDEX,
-  //     variables: { tabIndex }
-  //   });
-
-  //   const { userId } = this.props.userLogin;
-
-  //   const queryData = await this.props.client.readQuery({
-  //     query: TAKE_USER,
-  //     variables: { userId }
-  //   });
-
-  //   queryData.userPostsById.tabStatus =
-  //     tabIndexData.data.updateTabIndex.tabStatus;
-
-  //   this.props.client.writeQuery({
-  //     query: TAKE_USER,
-  //     variables: { userId },
-  //     data: queryData
-  //   });
-  // };
 
   render() {
     const { classes, userLogin, posts } = this.props;

@@ -19,15 +19,19 @@ const styles = theme => ({
   }
 });
 
-const PostListItem = props => (
-  <div className={props.classes.root}>
-    <div className={props.classes.titleContainer}>
-      <ListItem button component={Link} to={`/post/${props.post.id}`}>
-        <ListItemText primary={props.post.title} />
+const PostListItem = ({ post, userLogin, classes, actionFlag }) => (
+  <div className={classes.root}>
+    <div className={classes.titleContainer}>
+      <ListItem button component={Link} to={`/post/${post.id}`}>
+        <ListItemText primary={post.title} />
       </ListItem>
     </div>
-    <div className={props.classes.buttonContainer}>
-      <PostListItemActions postId={props.post.id} userLogin={props.userLogin} />
+    <div className={classes.buttonContainer}>
+      <PostListItemActions
+        postId={post.id}
+        userLogin={userLogin}
+        actionFlag={actionFlag}
+      />
     </div>
   </div>
 );

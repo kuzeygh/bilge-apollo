@@ -53,7 +53,7 @@ class PostListItemActions extends Component {
 
   render() {
     const { open } = this.state;
-    const { postId } = this.props;
+    const { postId, actionFlag } = this.props;
     const { userId } = this.props.userLogin;
     return (
       <React.Fragment>
@@ -86,27 +86,33 @@ class PostListItemActions extends Component {
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList>
-                    <Mutation
-                      mutation={PUBLISH_POST}
-                      variables={{ postId }}
-                      update={cache => {
-                        const data = cache.readQuery({
-                          query: TAKE_USER,
-                          variables: { userId }
-                        });
+                    {actionFlag && (
+                      <Mutation
+                        mutation={PUBLISH_POST}
+                        variables={{ postId }}
+                        update={cache => {
+                          const data = cache.readQuery({
+                            query: TAKE_USER,
+                            variables: { userId }
+                          });
 
-                        const publishedPosts = publishedPostData(data, postId);
+                          const publishedPosts = publishedPostData(
+                            data,
+                            postId
+                          );
 
-                        cache.writeQuery({
-                          query: TAKE_USER,
-                          publishedPosts
-                        });
-                      }}
-                    >
-                      {publishMutation => (
-                        <MenuItem onClick={publishMutation}>Yayımla</MenuItem>
-                      )}
-                    </Mutation>
+                          cache.writeQuery({
+                            query: TAKE_USER,
+                            publishedPosts
+                          });
+                        }}
+                      >
+                        {publishMutation => (
+                          <MenuItem onClick={publishMutation}>Yayımla</MenuItem>
+                        )}
+                      </Mutation>
+                    )}
+
                     <MenuItem component={Link} to={`/post/edit/${postId}`}>
                       Düzenle
                     </MenuItem>

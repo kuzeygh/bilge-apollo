@@ -20,6 +20,8 @@ const UserPostList = ({
   publishedPosts,
   classes
 }) => {
+  let actionFlag = notPublishedPosts ? true : false;
+
   const dataList = notPublishedPosts || publishedPosts;
 
   return (
@@ -27,7 +29,12 @@ const UserPostList = ({
       <div className={classes.container}>
         <List>
           {dataList.map(post => (
-            <PostListItem post={post} key={post.id} userLogin={userLogin} />
+            <PostListItem
+              post={post}
+              key={post.id}
+              userLogin={userLogin}
+              actionFlag={actionFlag}
+            />
           ))}
         </List>
       </div>

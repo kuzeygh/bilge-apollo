@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Paper, TextField, Typography, Button } from "@material-ui/core";
+import { Paper, TextField, Typography, Button, Grow } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
@@ -67,99 +67,103 @@ class PostCreate extends Component {
     const { userId } = authToken ? jwt.verify(authToken, APP_SECRET) : "";
 
     return (
-      <div className={classes.rootContainer}>
-        <Paper elevetion={24} className={classes.root}>
-          <div>
-            <Typography variant="h5" color="primary">
-              Başlık ve içeriklerini doldurun
-            </Typography>
+      <Grow in>
+        <div className={classes.rootContainer}>
+          <Paper elevetion={24} className={classes.root}>
+            <div>
+              <Typography variant="h5" color="primary">
+                Başlık ve içeriklerini doldurun
+              </Typography>
 
-            <div className={classes.titleContainer}>
-              <TextField
-                placeholder="Başlık"
-                label="Başlık"
-                margin="normal"
-                id="title"
-                fullWidth
-                value={title}
-                onChange={event => this.setState({ title: event.target.value })}
-                autoFocus
-              />
+              <div className={classes.titleContainer}>
+                <TextField
+                  placeholder="Başlık"
+                  label="Başlık"
+                  margin="normal"
+                  id="title"
+                  fullWidth
+                  value={title}
+                  onChange={event =>
+                    this.setState({ title: event.target.value })
+                  }
+                  autoFocus
+                />
+              </div>
+
+              <div className={classes.contentContainer}>
+                <TextEditor
+                  onChange={this.handleTextEditor}
+                  value={content}
+                  placeholder="İçerik"
+                />
+              </div>
             </div>
+            <div className={classes.buttonContainer}>
+              <Mutation
+                mutation={CREATE_POST}
+                variables={{ title, contentJson }}
+                update={(cache, { data: { createPost } }) => {
+                  const data = cache.readQuery({
+                    query: TAKE_USER,
+                    variables: { userId }
+                  });
+                  data.userPostsById.posts.unshift(createPost);
 
-            <div className={classes.contentContainer}>
-              <TextEditor
-                onChange={this.handleTextEditor}
-                value={content}
-                placeholder="İçerik"
-              />
+                  cache.writeQuery({
+                    query: TAKE_USER,
+                    data
+                  });
+                }}
+                onCompleted={() => {
+                  this.setState({ created: true });
+                  this.props.history.push(`/user/${userId}`);
+                }}
+              >
+                {createPostMutation =>
+                  created ? (
+                    <Button
+                      variant="contained"
+                      color="default"
+                      className={classes.buttons}
+                      disabled
+                      onClick={createPostMutation}
+                    >
+                      Kaydet
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      className={classes.buttons}
+                      onClick={createPostMutation}
+                      color="primary"
+                    >
+                      Kaydet
+                    </Button>
+                  )
+                }
+              </Mutation>
+              {created ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.buttons}
+                >
+                  Yayımla
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.buttons}
+                  disabled
+                >
+                  Yayımla
+                </Button>
+              )}
             </div>
-          </div>
-          <div className={classes.buttonContainer}>
-            <Mutation
-              mutation={CREATE_POST}
-              variables={{ title, contentJson }}
-              update={(cache, { data: { createPost } }) => {
-                const data = cache.readQuery({
-                  query: TAKE_USER,
-                  variables: { userId }
-                });
-                data.userPostsById.posts.unshift(createPost);
-
-                cache.writeQuery({
-                  query: TAKE_USER,
-                  data
-                });
-              }}
-              onCompleted={() => {
-                this.setState({ created: true });
-                this.props.history.push(`/user/${userId}`);
-              }}
-            >
-              {createPostMutation =>
-                created ? (
-                  <Button
-                    variant="contained"
-                    color="default"
-                    className={classes.buttons}
-                    disabled
-                    onClick={createPostMutation}
-                  >
-                    Kaydet
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    className={classes.buttons}
-                    onClick={createPostMutation}
-                    color="primary"
-                  >
-                    Kaydet
-                  </Button>
-                )
-              }
-            </Mutation>
-            {created ? (
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.buttons}
-              >
-                Yayımla
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.buttons}
-                disabled
-              >
-                Yayımla
-              </Button>
-            )}
-          </div>
-        </Paper>
-      </div>
+          </Paper>
+        </div>
+      </Grow>
     );
   }
 }

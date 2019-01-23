@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Grow } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import TextEditor from "./TextEditor";
 import { Value } from "slate";
@@ -42,21 +42,23 @@ class PostDisplay extends Component {
     content = Value.fromJSON(content);
 
     return (
-      <div className={classes.root}>
-        <div className={classes.flexContainer}>
-          <div className={classes.titleContainer}>
-            <Typography variant="h4" className={classes.title}>
-              {post.title}
+      <Grow in>
+        <div className={classes.root}>
+          <div className={classes.flexContainer}>
+            <div className={classes.titleContainer}>
+              <Typography variant="h4" className={classes.title}>
+                {post.title}
+              </Typography>
+            </div>
+          </div>
+          <TextEditor value={content} readOnly={true} display />
+          <div className={classes.authorContainer}>
+            <Typography variant="body1" color="secondary">
+              "Kullanıcı Email"
             </Typography>
           </div>
         </div>
-        <TextEditor value={content} readOnly={true} display />
-        <div className={classes.authorContainer}>
-          <Typography variant="body1" color="secondary">
-            "Kullanıcı Email"
-          </Typography>
-        </div>
-      </div>
+      </Grow>
     );
   }
 }

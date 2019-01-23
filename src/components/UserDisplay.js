@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { Grow } from "@material-ui/core";
 // import gql from "graphql-tag";
 import { withApollo } from "react-apollo";
 // import { Typography } from "@material-ui/core";
@@ -85,29 +86,31 @@ class UserDisplay extends Component {
 
     console.log(publishedPosts, notPublishedPosts);
     return (
-      <div className={classes.root}>
-        <UserNavigationButtons
-          onClick={({ type, draftFlag }) =>
-            this.onClickList({ type, draftFlag })
-          }
-        />
-        <div>
-          {activeList === "draft" && (
-            <UserPostList
-              draftFlag={true}
-              notPublishedPosts={notPublishedPosts}
-              userLogin={userLogin}
-            />
-          )}
-          {activeList === "published" && (
-            <UserPostList
-              draftFlag={true}
-              publishedPosts={publishedPosts}
-              userLogin={userLogin}
-            />
-          )}
+      <Grow in>
+        <div className={classes.root}>
+          <UserNavigationButtons
+            onClick={({ type, draftFlag }) =>
+              this.onClickList({ type, draftFlag })
+            }
+          />
+          <div>
+            {activeList === "draft" && (
+              <UserPostList
+                draftFlag={true}
+                notPublishedPosts={notPublishedPosts}
+                userLogin={userLogin}
+              />
+            )}
+            {activeList === "published" && (
+              <UserPostList
+                draftFlag={true}
+                publishedPosts={publishedPosts}
+                userLogin={userLogin}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      </Grow>
     );
   }
 }

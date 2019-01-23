@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Editor, getEventRange, getEventTransfer } from "slate-react";
 import { Block } from "slate";
-import { Typography, Link } from "@material-ui/core";
+import { Typography, Link, Grow } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import isUrl from "is-url";
 import ImageExtensions from "image-extensions";
@@ -88,6 +88,11 @@ const styles = theme => ({
 
   boldFont: {
     fontWeight: "bold"
+  },
+  fontContainer: {
+    display: "inline-block",
+    margin: 0,
+    padding: 0
   }
 });
 
@@ -112,28 +117,44 @@ class TextEditor extends Component {
     switch (props.mark.type) {
       case "bold":
         return (
-          <Typography {...attributes} style={{ fontWeight: "bold" }} inline>
-            {props.children}
-          </Typography>
+          <Grow in>
+            <div className={this.props.classes.fontContainer}>
+              <Typography {...attributes} style={{ fontWeight: "bold" }} inline>
+                {props.children}
+              </Typography>
+            </div>
+          </Grow>
         );
 
       case "italic":
         return (
-          <Typography {...attributes} component="em" inline>
-            {props.children}
-          </Typography>
+          <Grow in>
+            <div className={this.props.classes.fontContainer}>
+              <Typography {...attributes} component="em" inline>
+                {props.children}
+              </Typography>
+            </div>
+          </Grow>
         );
       case "strikethrough":
         return (
-          <Typography {...attributes} component="del" inline>
-            {props.children}
-          </Typography>
+          <Grow in>
+            <div className={this.props.classes.fontContainer}>
+              <Typography {...attributes} component="del" inline>
+                {props.children}
+              </Typography>
+            </div>
+          </Grow>
         );
       case "underline":
         return (
-          <Typography {...attributes} component="u" inline>
-            {props.children}
-          </Typography>
+          <Grow in>
+            <div className={this.props.classes.fontContainer}>
+              <Typography {...attributes} component="u" inline>
+                {props.children}
+              </Typography>
+            </div>
+          </Grow>
         );
       default:
         return next();
@@ -155,22 +176,26 @@ class TextEditor extends Component {
         const src = node.data.get("src");
 
         return (
-          <Typography
-            {...attributes}
-            src={src}
-            component="img"
-            style={{
-              marginTop: "10px",
-              marginBottom: "10px",
-              marginLeft: "auto",
-              marginRight: "auto",
-              width: "30%",
-              height: "30%",
-              textAlign: "center",
-              display: "block",
-              borderRadius: "0.5rem"
-            }}
-          />
+          <Grow in>
+            <div className={this.props.classes.fontContainer}>
+              <Typography
+                {...attributes}
+                src={src}
+                component="img"
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  width: "30%",
+                  height: "30%",
+                  textAlign: "center",
+                  display: "block",
+                  borderRadius: "0.5rem"
+                }}
+              />
+            </div>
+          </Grow>
         );
       }
       case "link": {
@@ -179,9 +204,13 @@ class TextEditor extends Component {
         console.log(href);
 
         return (
-          <Link href={href} {...attributes} inline target="_blank">
-            {children}
-          </Link>
+          <Grow in>
+            <div className={this.props.classes.fontContainer}>
+              <Link href={href} {...attributes} inline target="_blank">
+                {children}
+              </Link>
+            </div>
+          </Grow>
         );
       }
       default: {

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import gql from "graphql-tag";
+// import gql from "graphql-tag";
 import { withApollo } from "react-apollo";
-import { Typography, List, AppBar, Tabs, Tab } from "@material-ui/core";
-import PostListItem from "./PostListItem";
-import SwipeableViews from "react-swipeable-views";
-import { TAKE_USER } from "./UserDisplayQuery";
+// import { Typography } from "@material-ui/core";
+import UserPostList from "./UserPostList";
+// import { TAKE_USER } from "./UserDisplayQuery";
 import UserNavigationButtons from "./UserNavigationButtons";
 
 const styles = theme => ({
@@ -33,137 +32,84 @@ const styles = theme => ({
   }
 });
 
-const UPDATE_TAB_INDEX = gql`
-  mutation UpdateTabIndex($tabIndex: Int!) {
-    updateTabIndex(tabIndex: $tabIndex) @client
-  }
-`;
+// const UPDATE_TAB_INDEX = gql`
+//   mutation UpdateTabIndex($tabIndex: Int!) {
+//     updateTabIndex(tabIndex: $tabIndex) @client
+//   }
+// `;
 
 class UserDisplay extends Component {
   state = {
-    index: this.props.tabIndex
+    // index: this.props.tabIndex,
+    activeList: "",
+    draftFlag: false
   };
 
-  handleTabChange = async (event, value) => {
-    const tabIndex = value;
-    this.setState({ index: tabIndex });
-  };
-
-  handleChangeIndex = index => {
-    this.setState({ value: index });
+  onClickList = ({ type, draftFlag }) => {
+    this.setState({ activeList: type, draftFlag });
   };
 
   // Component dağıtılmadan önce
   // local state yi güncelliyoruz.
-  componentWillUnmount = async () => {
-    const tabIndex = this.state.index;
-    const tabIndexData = await this.props.client.mutate({
-      mutation: UPDATE_TAB_INDEX,
-      variables: { tabIndex }
-    });
+  // componentWillUnmount = async () => {
+  //   const tabIndex = this.state.index;
+  //   const tabIndexData = await this.props.client.mutate({
+  //     mutation: UPDATE_TAB_INDEX,
+  //     variables: { tabIndex }
+  //   });
 
-    const { userId } = this.props.userLogin;
+  //   const { userId } = this.props.userLogin;
 
-    const queryData = await this.props.client.readQuery({
-      query: TAKE_USER,
-      variables: { userId }
-    });
+  //   const queryData = await this.props.client.readQuery({
+  //     query: TAKE_USER,
+  //     variables: { userId }
+  //   });
 
-    queryData.userPostsById.tabStatus =
-      tabIndexData.data.updateTabIndex.tabStatus;
+  //   queryData.userPostsById.tabStatus =
+  //     tabIndexData.data.updateTabIndex.tabStatus;
 
-    this.props.client.writeQuery({
-      query: TAKE_USER,
-      variables: { userId },
-      data: queryData
-    });
-  };
+  //   this.props.client.writeQuery({
+  //     query: TAKE_USER,
+  //     variables: { userId },
+  //     data: queryData
+  //   });
+  // };
 
   render() {
-    const { classes, theme, userLogin, posts } = this.props;
+    const { classes, userLogin, posts } = this.props;
 
-    const { index } = this.state;
+    const { activeList } = this.state;
 
     const publishedPosts = posts.filter(post => post.published === true);
     const notPublishedPosts = posts.filter(post => post.published === false);
+
+    console.log(publishedPosts, notPublishedPosts);
     return (
       <div className={classes.root}>
-        <div className={classes.headerContainer}>
-          <Typography variant="h4" className={classes.textFields}>
-            {userLogin.name}
-          </Typography>
-          <Typography varint="h6" className={classes.textFields}>
-            {userLogin.email}
-          </Typography>
+        <UserNavigationButtons
+          onClick={({ type, draftFlag }) =>
+            this.onClickList({ type, draftFlag })
+          }
+        />
+        <div>
+          {activeList === "draft" && (
+            <UserPostList
+              draftFlag={true}
+              notPublishedPosts={notPublishedPosts}
+              userLogin={userLogin}
+            />
+          )}
+          {activeList === "published" && (
+            <UserPostList
+              draftFlag={true}
+              publishedPosts={publishedPosts}
+              userLogin={userLogin}
+            />
+          )}
         </div>
-
-        <div className={classes.listContainer}>
-          <Typography variant="h4" color="primary">
-            Makaleler
-          </Typography>
-          <div className={classes.tabContainer}>
-            <AppBar position="static" color="default">
-              <Tabs
-                value={index}
-                onChange={this.handleTabChange}
-                indicatorColor="primary"
-                textColor="primary"
-                variant="fullWidth"
-              >
-                <Tab label="Taslaklar" />
-                <Tab label="Yayınlar" />
-              </Tabs>
-            </AppBar>
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={index}
-              onChangeIndex={this.handleChangeIndex}
-            >
-              <NotPublishTabContainer dir={theme.direction}>
-                <List key="published">
-                  {notPublishedPosts.map(post => (
-                    <PostListItem
-                      post={post}
-                      key={post.id}
-                      userLogin={userLogin}
-                    />
-                  ))}
-                </List>
-              </NotPublishTabContainer>
-              <PublishTabContainer dir={theme.direction}>
-                <List key="not-published">
-                  {publishedPosts.map(post => (
-                    <PostListItem
-                      post={post}
-                      key={post.id}
-                      userLogin={userLogin}
-                    />
-                  ))}
-                </List>
-              </PublishTabContainer>
-            </SwipeableViews>
-          </div>
-        </div>
-        <UserNavigationButtons />
       </div>
     );
   }
-}
-
-function NotPublishTabContainer({ children, dir }) {
-  return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
-      {children}
-    </Typography>
-  );
-}
-
-function PublishTabContainer({ children, dir }) {
-  return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
-      {children}
-    </Typography>
-  );
 }
 
 export default withStyles(styles, { withTheme: true })(withApollo(UserDisplay));

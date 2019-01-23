@@ -11,7 +11,8 @@ const styles = theme => ({
     backgroundColor: "#37474f",
     display: "flex",
     justifyContent: "center",
-    width: "70%"
+    width: "70%",
+    borderRadius: "0.5rem"
   },
   buttons: {
     margin: theme.spacing.unit * 2,
@@ -31,13 +32,21 @@ const styles = theme => ({
   }
 });
 
-const UserNavigationButtons = ({ classes }) => (
+const UserNavigationButtons = ({ classes, onClick }) => (
   <div className={classes.mainContainer}>
     <div className={classes.buttonContainer}>
-      <Button className={[classes.buttons, classes.notPublished]}>
+      <Button
+        className={[classes.buttons, classes.notPublished]}
+        onClick={() => onClick({ type: "draft", draftFlag: true })}
+      >
         TASLAKLAR
       </Button>
-      <Button className={[classes.buttons, classes.published]}>YAYINLAR</Button>
+      <Button
+        className={[classes.buttons, classes.published]}
+        onClick={() => onClick({ type: "published", draftFlag: true })}
+      >
+        YAYINLAR
+      </Button>
     </div>
   </div>
 );

@@ -11,6 +11,18 @@ const resolvers = {
       cache.writeData({ data });
 
       return data;
+    },
+    updateActiveList: (_, args, { cache }) => {
+      const data = {
+        userSettings: {
+          activeList: args.activeList,
+          __typename: "UserSettings"
+        }
+      };
+
+      cache.writeData({ data });
+
+      return;
     }
     // writeUserId: (_, args, { cache }) => {
     //   const data = {

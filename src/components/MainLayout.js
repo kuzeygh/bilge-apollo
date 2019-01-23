@@ -20,6 +20,9 @@ export const _TAKE_USER_ID = gql`
       name
       email
     }
+    userSettings {
+      activeList
+    }
   }
 `;
 

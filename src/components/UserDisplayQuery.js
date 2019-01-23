@@ -14,19 +14,18 @@ export const TAKE_USER = gql`
         content
         published
       }
-      tabStatus @client {
-        tabIndex
-      }
     }
   }
 `;
 
 class UserDisplayQuery extends Component {
   render() {
-    const { userLogin } = this.props.client.readQuery({
+    const { userLogin, userSettings } = this.props.client.readQuery({
       query: _TAKE_USER_ID
     });
+
     const { userId } = userLogin;
+    const { activeList } = userSettings;
 
     return (
       <Query query={TAKE_USER} variables={{ userId }}>
@@ -35,13 +34,12 @@ class UserDisplayQuery extends Component {
           if (error) return <div>Error...</div>;
 
           const { posts } = data.userPostsById;
-          const { tabIndex } = data.userPostsById.tabStatus;
 
           return (
             <UserDisplay
               userLogin={userLogin}
               posts={posts}
-              tabIndex={tabIndex}
+              activeList={activeList}
             />
           );
         }}

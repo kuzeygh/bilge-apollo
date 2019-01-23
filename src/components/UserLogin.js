@@ -5,7 +5,8 @@ import {
   TextField,
   Button,
   InputAdornment,
-  IconButton
+  IconButton,
+  Grow
 } from "@material-ui/core";
 import {
   AccountBoxTwoTone,
@@ -125,91 +126,63 @@ class UserLogin extends Component {
     const password = password1;
     console.log(email, name, password);
     return (
-      <div className={classes.rootContainer}>
-        <Paper className={classes.root} spacing={1}>
-          <div className={classes.loginheader}>
-            {login ? (
-              <Typography variant="h4">Giriş Yapın</Typography>
-            ) : (
-              <Typography variant="h4">Üye Olun</Typography>
-            )}
-          </div>
-          <div className={classes.textFieldContainer}>
-            {!login && (
+      <Grow in>
+        <div className={classes.rootContainer}>
+          <Paper className={classes.root} spacing={1}>
+            <div className={classes.loginheader}>
+              {login ? (
+                <Typography variant="h4">Giriş Yapın</Typography>
+              ) : (
+                <Typography variant="h4">Üye Olun</Typography>
+              )}
+            </div>
+            <div className={classes.textFieldContainer}>
+              {!login && (
+                <TextField
+                  placeholder="Kullanıcı Adı"
+                  margin="normal"
+                  id="name"
+                  value={name}
+                  fullWidth
+                  className={classes.textFields}
+                  onChange={this.handleChange("name")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountBoxTwoTone fontSize="large" />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              )}
+
               <TextField
-                placeholder="Kullanıcı Adı"
+                placeholder="Email"
                 margin="normal"
-                id="name"
-                value={name}
+                id="email"
+                type="email"
                 fullWidth
                 className={classes.textFields}
-                onChange={this.handleChange("name")}
+                value={email}
+                onChange={this.handleChange("email")}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <AccountBoxTwoTone fontSize="large" />
+                      <EmailTwoTone fontSize="large" />
                     </InputAdornment>
                   )
                 }}
               />
-            )}
 
-            <TextField
-              placeholder="Email"
-              margin="normal"
-              id="email"
-              type="email"
-              fullWidth
-              className={classes.textFields}
-              value={email}
-              onChange={this.handleChange("email")}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailTwoTone fontSize="large" />
-                  </InputAdornment>
-                )
-              }}
-            />
-
-            <TextField
-              placeholder="Şifre"
-              margin="normal"
-              id="password1"
-              type={showPassword ? "text" : "password"}
-              fullWidth
-              className={classes.textFields}
-              value={password1}
-              onChange={this.handleChange("password1")}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <HttpsTwoTone fontSize="large" />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={this.showPassword}>
-                      {showPassword ? (
-                        <VisibilityOutlined />
-                      ) : (
-                        <VisibilityOffOutlined />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }}
-            />
-            {!login && (
               <TextField
-                placeholder="Şifre Tekrar"
+                placeholder="Şifre"
                 margin="normal"
-                id="password2"
+                id="password1"
                 type={showPassword ? "text" : "password"}
                 fullWidth
                 className={classes.textFields}
-                value={password2}
-                onChange={this.handleChange("password2")}
+                value={password1}
+                onChange={this.handleChange("password1")}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -229,44 +202,74 @@ class UserLogin extends Component {
                   )
                 }}
               />
-            )}
-          </div>
-          {
-            ////// Hatanın Verildiği kısım /////
-            //--------------------------------//
-          }
-          <div>{error ? "Kullanıcı adı veya şifre hatalı" : null}</div>
-
-          <div className={classes.buttonContainer}>
-            <Mutation
-              mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
-              variables={{ email, name, password }}
-              onCompleted={data => this._confirm(data)}
-              onError={() => this.setState({ error: true })}
-            >
-              {signupOrLogin => (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.buttons}
-                  onClick={signupOrLogin}
-                >
-                  {login ? "Giriş" : "Üye Ol"}
-                </Button>
+              {!login && (
+                <TextField
+                  placeholder="Şifre Tekrar"
+                  margin="normal"
+                  id="password2"
+                  type={showPassword ? "text" : "password"}
+                  fullWidth
+                  className={classes.textFields}
+                  value={password2}
+                  onChange={this.handleChange("password2")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <HttpsTwoTone fontSize="large" />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={this.showPassword}>
+                          {showPassword ? (
+                            <VisibilityOutlined />
+                          ) : (
+                            <VisibilityOffOutlined />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
               )}
-            </Mutation>
+            </div>
+            {
+              ////// Hatanın Verildiği kısım /////
+              //--------------------------------//
+            }
+            <div>{error ? "Kullanıcı adı veya şifre hatalı" : null}</div>
 
-            <Button
-              variant="outlined"
-              color="default"
-              className={classes.buttons}
-              onClick={this.handleClick}
-            >
-              {login ? "Hesap aç" : "Hesabım Var"}
-            </Button>
-          </div>
-        </Paper>
-      </div>
+            <div className={classes.buttonContainer}>
+              <Mutation
+                mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
+                variables={{ email, name, password }}
+                onCompleted={data => this._confirm(data)}
+                onError={() => this.setState({ error: true })}
+              >
+                {signupOrLogin => (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.buttons}
+                    onClick={signupOrLogin}
+                  >
+                    {login ? "Giriş" : "Üye Ol"}
+                  </Button>
+                )}
+              </Mutation>
+
+              <Button
+                variant="outlined"
+                color="default"
+                className={classes.buttons}
+                onClick={this.handleClick}
+              >
+                {login ? "Hesap aç" : "Hesabım Var"}
+              </Button>
+            </div>
+          </Paper>
+        </div>
+      </Grow>
     );
   }
 }

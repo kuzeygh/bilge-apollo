@@ -4,6 +4,16 @@ import { Grow } from "@material-ui/core";
 import { withApollo } from "react-apollo";
 import UserPostList from "./UserPostList";
 import UserNavigationButtons from "./UserNavigationButtons";
+import { _TAKE_USER_ID } from "./MainLayout";
+// import gql from "graphql-tag";
+
+// const UPDATE_ACTIVE_LIST = gql`
+//   mutation UpdateActiveList($activeList: String!) {
+//     updateActiveList(activeList: $activeList) {
+//       activeList
+//     }
+//   }
+// `;
 
 const styles = theme => ({
   root: {
@@ -32,23 +42,41 @@ const styles = theme => ({
 
 class UserDisplay extends Component {
   state = {
-    activeList: "draft",
-    draftFlag: false
+    draftFlag: false,
+    activeList: this.props.activeList
   };
 
   onClickList = ({ type, draftFlag }) => {
     this.setState({ activeList: type, draftFlag });
+    this.props.client.writeQuery({
+      query: _TAKE_USER_ID,
+      data: {
+        userSettings: {
+          __typename: "UserSettings",
+          activeList: type
+        }
+      }
+    });
   };
+
+  // componentWillUnmount() {
+  //   // Burada çıkışta user active listi lokale yazacağız.
+  //   console.log(this.props.client, this.state.activeList);
+  //   this.props.client.mutate({
+  //     mutation: UPDATE_ACTIVE_LIST,
+  //     variables: {
+  //       activeList: this.state.activeList
+  //     }
+  //   });
+  // }
 
   render() {
     const { classes, userLogin, posts } = this.props;
-
     const { activeList } = this.state;
 
     const publishedPosts = posts.filter(post => post.published === true);
     const notPublishedPosts = posts.filter(post => post.published === false);
 
-    console.log(publishedPosts, notPublishedPosts);
     return (
       <Grow in>
         <div className={classes.root}>

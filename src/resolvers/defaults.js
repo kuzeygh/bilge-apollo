@@ -10,9 +10,9 @@ const defaults = {
   mutate: {
     errorPolicy: "all"
   },
-  tabStatus: {
-    __typename: "TabStatus",
-    tabIndex: 0
+  userSettings: {
+    __typename: "UserSettings",
+    activeList: "draft"
   },
   userLogin: {
     __typename: "UserLogin",

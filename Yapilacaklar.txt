@@ -1,14 +1,13 @@
 
 Öncelikli Yapılacaklar:
-1) Bir makale yayımlanırsa taslaklar sekmesinden yayınlar sekmesine geçiş yapmayı dene.
-2) Editorde yazı yazarken toolbar olarak hangi eleman kullanılırsa onu renkli veya karşıt renkler kullanılarak göstermek gerekiyor.
-3) Herhangi bir component oluşturulmadan önce bir animasyon ekleme işi yap. Bunun için kalın, italic gibi işlemler yapılınca render 
+1) Editorde yazı yazarken toolbar olarak hangi eleman kullanılırsa onu renkli veya karşıt renkler kullanılarak göstermek gerekiyor.
+2) Herhangi bir component oluşturulmadan önce bir animasyon ekleme işi yap. Bunun için kalın, italic gibi işlemler yapılınca render 
   ... edilen Typograhpy componentlerından önce yapabiliriz.
-4) Makalelerin altına Teşekkür et butonu koy bunu websocketlerle birlikte kullan yani dinamik olarak gösterilsin. 
-5) Her bir makalenin altına yorum özelliği getir.
-6) Kullanıcının profilinde değişiklik yapabilmesine izin vermek için hesap componenti yap ayrıca bu componenta avatar resim ekleme özelliği olsun.
-7) Yeni bir post yaratılınca direkt olarak yayımlama konumuna geçiyor bu hataya baklamalısın.
-8) PostList iteme makaledeki ilk resmi alabilirsen almayı eğer mümkün değilse bunu sonra bırak bir resim upload ederek post lise avatar olarak ekle.
+3) Makalelerin altına Teşekkür et butonu koy bunu websocketlerle birlikte kullan yani dinamik olarak gösterilsin. 
+4) Her bir makalenin altına yorum özelliği getir.
+5) Kullanıcının profilinde değişiklik yapabilmesine izin vermek için hesap componenti yap ayrıca bu componenta avatar resim ekleme özelliği olsun.
+6) Yeni bir post yaratılınca direkt olarak yayımlama konumuna geçiyor bu hataya baklamalısın.
+7) PostList iteme makaledeki ilk resmi alabilirsen almayı eğer mümkün değilse bunu sonra bırak bir resim upload ederek post lise avatar olarak ekle.
 
 
 
@@ -62,3 +61,5 @@ S.19) TextEditor de render edilen Material ui elementlerine slide ekle
   C.19) Text editörün içine font değiştirme işlemlerinde material ui den Grow elementi kullanıldı.
 S.20) Taslaklardaki yayımla çalışmıyor ayrıca yayımlardaki Yayımlayı kaldır. 
   C.20) PostListItemActions lardaki actionFlag kullanılarak sorun çözüldü.
+S.21) Bir makale yayımlanırsa taslaklar sekmesinden yayınlar sekmesine geçiş yapmayı dene.
+  C.21) Bu işlem cache'e userSettings, activeList değeri atanarak çözüldü.

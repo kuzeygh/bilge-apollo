@@ -97,6 +97,10 @@ const styles = theme => ({
 });
 
 class TextEditor extends Component {
+  // state = {
+  //   iconActive: ""
+  // };
+
   // Font-Awesom Yükleme işlemi
   componentDidMount() {
     loadCSS(
@@ -108,7 +112,7 @@ class TextEditor extends Component {
   MarkHotKey(event, options) {
     event.preventDefault();
     const { type } = options;
-
+    // this.setState({ iconActive: type });
     this.editor.toggleMark(type);
   }
 
@@ -201,7 +205,6 @@ class TextEditor extends Component {
       case "link": {
         const { data } = node;
         const href = data.get("href");
-        console.log(href);
 
         return (
           <Grow in>
@@ -256,6 +259,7 @@ class TextEditor extends Component {
         .insertText(text)
         .moveFocusBackward(text.length)
         .command(wrapLink, href);
+      // this.setState({ iconActive: "link" });
     }
   };
 
@@ -315,10 +319,12 @@ class TextEditor extends Component {
 
     if (!src) return;
     this.editor.command(insertImage, src);
+    // this.setState({ iconActive: "image" });
   };
 
   render() {
     const { classes } = this.props;
+    // const { iconActive } = this.setState;
     return (
       <div>
         {!this.props.display && (

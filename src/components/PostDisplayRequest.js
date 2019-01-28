@@ -11,6 +11,10 @@ const TAKE_POST = gql`
       id
       title
       content
+      published
+      votes {
+        id
+      }
     }
   }
 `;

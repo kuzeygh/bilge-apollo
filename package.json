@@ -7,6 +7,7 @@
     "@material-ui/icons": "^3.0.2",
     "apollo-boost": "^0.1.23",
     "apollo-link-context": "^1.0.12",
+    "apollo-link-ws": "^1.0.12",
     "apollo-upload-client": "^10.0.0",
     "fg-loadcss": "^2.1.0",
     "graphql": "^14.0.2",
@@ -24,6 +25,7 @@
     "recompose": "^0.30.0",
     "slate": "^0.44.9",
     "slate-react": "^0.21.15",
+    "subscriptions-transport-ws": "^0.9.15",
     "typeface-roboto": "^0.0.54"
   },
   "scripts": {

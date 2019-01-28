@@ -124,7 +124,7 @@ class UserLogin extends Component {
     } = this.state;
 
     const password = password1;
-    console.log(email, name, password);
+
     return (
       <Grow in>
         <div className={classes.rootContainer}>

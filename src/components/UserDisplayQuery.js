@@ -13,6 +13,9 @@ export const TAKE_USER = gql`
         title
         content
         published
+        votes {
+          id
+        }
       }
     }
   }

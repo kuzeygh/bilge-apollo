@@ -17,6 +17,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import defaults from "./resolvers/defaults";
 import resolvers from "./resolvers/resolvers";
 
+//Subscriptions modules
+import { split } from "apollo-link";
+import { WebSocketLink } from "apollo-link-ws";
+import { getMainDefinition } from "apollo-utilities";
+
 const uploadAndHttpLink = createUploadLink({
   uri: "http://localhost:4000"
 });
@@ -46,11 +51,32 @@ const stateLink = withClientState({
   defaults
 });
 
+// WebSocket link ayarlaması yapılıyor
+const wsLink = new WebSocketLink({
+  uri: "ws://localhost:4000",
+  options: {
+    reconnect: true,
+    connectionParams: {
+      authToken: localStorage.getItem(AUTH_TOKEN)
+    }
+  }
+});
+
+// Linkler websocket link olup olmamasına göre ayırıma tabi tutuluyor.
+const link = split(
+  ({ query }) => {
+    const { kind, operation } = getMainDefinition(query);
+    return kind === "OperationDefinition" && operation === "subscription";
+  },
+  wsLink,
+  stateLink.concat(authLink.concat(uploadAndHttpLink))
+);
+
 // Linkler alınarak client için option olarak veriliyor
 
 const client = new ApolloClient({
   cache,
-  link: stateLink.concat(authLink.concat(uploadAndHttpLink))
+  link
 });
 
 ReactDOM.render(

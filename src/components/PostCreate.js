@@ -58,7 +58,7 @@ class PostCreate extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { title, created } = this.state;
     let { content } = this.state;
     let contentJson = JSON.stringify(content);
@@ -116,7 +116,7 @@ class PostCreate extends Component {
                 }}
                 onCompleted={() => {
                   this.setState({ created: true });
-                  this.props.history.push(`/user/${userId}`);
+                  history.push(`/user/${userId}`);
                 }}
               >
                 {createPostMutation =>

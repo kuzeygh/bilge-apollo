@@ -1,6 +1,6 @@
 
 Öncelikli Yapılacaklar:
-
+Ö.1) NewVote oluşturulduğu zaman apollo client tarafından otomatik olarak post update edilecek.
 2) Makalelerin altına Teşekkür et butonu koy bunu websocketlerle birlikte kullan yani dinamik olarak gösterilsin. 
 3) Her bir makalenin altına yorum özelliği getir.
 4) Kullanıcının profilinde değişiklik yapabilmesine izin vermek için hesap componenti yap ayrıca bu componenta avatar resim ekleme özelliği olsun.

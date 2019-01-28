@@ -40,7 +40,6 @@ const styles = theme => ({
 class PostDisplay extends Component {
   render() {
     const { classes, post } = this.props;
-
     let content = post.content;
     content = JSON.parse(content);
     content = Value.fromJSON(content);
@@ -62,7 +61,8 @@ class PostDisplay extends Component {
             </Typography>
           </div>
           <div className={classes.userActions}>
-            <PostUserActions />
+            <PostUserActions postId={post.id} />
+            {post.votes === null ? 0 : post.votes.length}
           </div>
         </div>
       </Grow>

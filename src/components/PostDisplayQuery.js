@@ -16,6 +16,9 @@ class PostDisplayQuery extends Component {
           title
           content
           published
+          votes {
+            id
+          }
         }
       `,
       fragmentName: "MyPost"

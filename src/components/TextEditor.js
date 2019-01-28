@@ -8,7 +8,6 @@ import ImageExtensions from "image-extensions";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag";
 import TextEditorToolbar from "./TextEditorToolbar";
-import { loadCSS } from "fg-loadcss/src/loadCSS";
 
 const CREATE_POST_IMAGE = gql`
   mutation CreatePostImage($picture: Upload!) {
@@ -102,12 +101,12 @@ class TextEditor extends Component {
   // };
 
   // Font-Awesom Yükleme işlemi
-  componentDidMount() {
-    loadCSS(
-      "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
-      document.querySelector("#insertion-point-jss")
-    );
-  }
+  // componentDidMount() {
+  //   loadCSS(
+  //     "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
+  //     document.querySelector("#insertion-point-jss")
+  //   );
+  // }
 
   MarkHotKey(event, options) {
     event.preventDefault();

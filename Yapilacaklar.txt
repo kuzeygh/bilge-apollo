@@ -1,20 +1,22 @@
 
 Öncelikli Yapılacaklar:
-1) Editorde yazı yazarken toolbar olarak hangi eleman kullanılırsa onu renkli veya karşıt renkler kullanılarak göstermek gerekiyor.
-2) Herhangi bir component oluşturulmadan önce bir animasyon ekleme işi yap. Bunun için kalın, italic gibi işlemler yapılınca render 
-  ... edilen Typograhpy componentlerından önce yapabiliriz.
-3) Makalelerin altına Teşekkür et butonu koy bunu websocketlerle birlikte kullan yani dinamik olarak gösterilsin. 
-4) Her bir makalenin altına yorum özelliği getir.
-5) Kullanıcının profilinde değişiklik yapabilmesine izin vermek için hesap componenti yap ayrıca bu componenta avatar resim ekleme özelliği olsun.
-6) Yeni bir post yaratılınca direkt olarak yayımlama konumuna geçiyor bu hataya baklamalısın.
-7) PostList iteme makaledeki ilk resmi alabilirsen almayı eğer mümkün değilse bunu sonra bırak bir resim upload ederek post lise avatar olarak ekle.
 
+2) Makalelerin altına Teşekkür et butonu koy bunu websocketlerle birlikte kullan yani dinamik olarak gösterilsin. 
+3) Her bir makalenin altına yorum özelliği getir.
+4) Kullanıcının profilinde değişiklik yapabilmesine izin vermek için hesap componenti yap ayrıca bu componenta avatar resim ekleme özelliği olsun.
+5) Yeni bir post yaratılınca direkt olarak yayımlama konumuna geçiyor bu hataya baklamalısın.
+6) PostList iteme makaledeki ilk resmi alabilirsen almayı eğer mümkün değilse bunu sonra bırak bir resim upload ederek post lise avatar olarak ekle.
+7) Üye olun veya Girişteki iconları fontawesome ile değiştir.
+8) Kullanıcı üye olduğu Taslaklar ve Yayınlar kısmında makale yok ise kullanıcının makale yazması için bir özellik ekle.
 
 
 Düşük öncelikli yapılacaklar.
 1) Editor edit veya create halindeyken hyperlink ler için preview özelliği ekle.
 2) Avatar vs resimleri işlemek için bir teknoloji var mı ona bak.
 3) PostListItemActions bileşeninde kullanılan iconları font-awesome ikonları ile değiştir.
+4) Text Editor içinde kalın, italic butonlarında boş bir yere basıldığı zaman kalın devam etmesi gerekirken bir şekilde devam etmiyor. Buda işleyişi 
+bozuyor.
+5) Menüde başlangıçta gelen sol borderdaki maviliği kaldır.
 
  
 
@@ -63,3 +65,9 @@ S.20) Taslaklardaki yayımla çalışmıyor ayrıca yayımlardaki Yayımlayı ka
   C.20) PostListItemActions lardaki actionFlag kullanılarak sorun çözüldü.
 S.21) Bir makale yayımlanırsa taslaklar sekmesinden yayınlar sekmesine geçiş yapmayı dene.
   C.21) Bu işlem cache'e userSettings, activeList değeri atanarak çözüldü.
+S.22) Editorde yazı yazarken toolbar olarak hangi eleman kullanılırsa onu renkli veya karşıt renkler kullanılarak göstermek gerekiyor.
+  C.22) TextEditorToolbar fonksiyonel bileşenden durumlu olan bileşene çevrildi. Bu şekilde toggle işlemleri bir üst durumda okunabilir duruma geldi
+  ... ancak yapılması gereken bir kaç işte daha var.
+S.23) Herhangi bir component oluşturulmadan önce bir animasyon ekleme işi yap. Bunun için kalın, italic gibi işlemler yapılınca render 
+  ... edilen Typograhpy componentlerından önce yapabiliriz.
+  C.23) Bu sorun daha önce sorunlarla birlikte çözüldü.

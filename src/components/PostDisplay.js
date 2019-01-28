@@ -3,6 +3,7 @@ import { Typography, Grow } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import TextEditor from "./TextEditor";
 import { Value } from "slate";
+import PostUserActions from "./PostUserActions";
 
 const styles = theme => ({
   root: {
@@ -30,6 +31,9 @@ const styles = theme => ({
   authorContainer: {
     display: "flex",
     justifyContent: "flex-end"
+  },
+  userActions: {
+    margin: "3rem auto"
   }
 });
 
@@ -56,6 +60,9 @@ class PostDisplay extends Component {
             <Typography variant="body1" color="secondary">
               "Kullanıcı Email"
             </Typography>
+          </div>
+          <div className={classes.userActions}>
+            <PostUserActions />
           </div>
         </div>
       </Grow>

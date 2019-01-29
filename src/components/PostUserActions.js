@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+// import { TAKE_USER } from "./UserDisplayQuery";
 
 const styles = theme => ({
   buttonContainer: {

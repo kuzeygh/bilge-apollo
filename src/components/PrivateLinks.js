@@ -14,6 +14,9 @@ const styles = theme => ({
 
 const PrivateLinks = ({ history, userLogin, client, classes }) => (
   <React.Fragment>
+    <MenuItem component={Link} to="/" className={classes.menuLinks}>
+      <ListItemText primary="Ana Sayfa" />
+    </MenuItem>
     <MenuItem component={Link} to="/postcreate" className={classes.menuLinks}>
       <ListItemText primary="Makale Yaz" />
     </MenuItem>

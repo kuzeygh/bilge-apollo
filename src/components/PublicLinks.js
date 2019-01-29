@@ -11,6 +11,9 @@ const styles = theme => ({
 
 const PublicLinks = ({ classes }) => (
   <React.Fragment>
+    <MenuItem component={Link} to="/" className={classes.menuLinks}>
+      <ListItemText primary="Ana Sayfa" />
+    </MenuItem>
     <MenuItem component={Link} to="/userlogin" className={classes.menuLinks}>
       <ListItemText primary="Giriş" />
     </MenuItem>

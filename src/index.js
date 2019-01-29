@@ -40,7 +40,7 @@ const authLink = setContext((_, { headers }) => {
 // Cache Kuruluyor
 
 const cache = new InMemoryCache({
-  dataIdFromObject: object => object.id
+  dataIdFromObject: object => object.key || null
 });
 
 // Apollo'da local state kullanımı için defaults ve resolversler geçiyor.

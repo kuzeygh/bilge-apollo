@@ -23,7 +23,7 @@ class PostDisplayQuery extends Component {
       `,
       fragmentName: "MyPost"
     });
-
+    console.log(post);
     if (post) {
       return <PostDisplay post={post} />;
     }

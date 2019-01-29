@@ -3,7 +3,7 @@ import { Typography, Grow } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import TextEditor from "./TextEditor";
 import { Value } from "slate";
-import PostUserActions from "./PostUserActions";
+// import PostUserActions from "./PostUserActions";
 
 const styles = theme => ({
   root: {
@@ -60,10 +60,10 @@ class PostDisplay extends Component {
               "Kullanıcı Email"
             </Typography>
           </div>
-          <div className={classes.userActions}>
+          {/* <div className={classes.userActions}>
             <PostUserActions postId={post.id} />
             {post.votes === null ? 0 : post.votes.length}
-          </div>
+          </div> */}
         </div>
       </Grow>
     );
